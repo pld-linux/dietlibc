@@ -1,9 +1,10 @@
---- dietlibc-0.24/diet.c.orig	2004-02-26 08:41:02.000000000 +0100
-+++ dietlibc-0.24/diet.c	2004-02-26 08:39:20.000000000 +0100
-@@ -119,6 +119,7 @@
+--- dietlibc-0.25/diet.c.orig	2004-04-15 10:47:08.000000000 +0200
++++ dietlibc-0.25/diet.c	2004-04-15 10:48:29.220804200 +0200
+@@ -119,6 +119,8 @@
        memmove(shortplatform,argv[1],(size_t)(tmp2-cc));
        platform[tmp2-cc+len]=0;
        if (shortplatform[0]=='i' && shortplatform[2]=='8' && shortplatform[3]=='6') shortplatform[1]='3';
++      else if (!strncmp(shortplatform, "pentium4", 8)) strcpy(shortplatform, "i386");
 +      else if (!strncmp(shortplatform, "pentium3", 8)) strcpy(shortplatform, "i386");
        else if (!strncmp(shortplatform, "athlon", 6)) strcpy(shortplatform, "i386");
        else if (!strncmp(shortplatform, "amd64", 5)) strcpy(shortplatform, "x86_64");
