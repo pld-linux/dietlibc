@@ -6,20 +6,19 @@ Summary:	C library optimized for size
 Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR):	libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.25
+Version:	0.27
 Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	a24c99d65b7443d17d0b15b74a1b39a0
+# Source0-md5:	cd90fae1bf6c217889c0f89d2d0c1570
 Source1:	%{name}-divrem.m4
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
 Patch3:		%{name}-amd64.patch
 Patch4:		%{name}-pentiumX.patch
-Patch5:		%{name}-gcc34.patch
 URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc
 BuildRequires:	m4
@@ -75,7 +74,6 @@ statyczne.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
-%patch5 -p1
 
 %ifarch sparc
 # generate missing functions
@@ -91,9 +89,11 @@ OPTFLAGS="%{rpmcflags} %{?with_spp:-fno-stack-protector}"; export OPTFLAGS
 %ifarch sparc sparcv9
 sparc32 \
 %endif
-%{__make} prefix=%{dietprefix} all
+%{__make} all \
+	prefix=%{dietprefix}
 %ifarch %{ix86}
-%{__make} prefix=%{dietprefix} dyn
+%{__make} dyn \
+	prefix=%{dietprefix}
 %endif
 
 %install
