@@ -31,7 +31,8 @@ Small libc for building embedded applications.
 
 %build
 # Override normal cflags with optimization for size
-%{__make} "CFLAGS=-nostdinc -march=i586 -fomit-frame-pointer -Os -I%{_libdir}/gcc-lib/i586-mandrake-linux/2.96/include"
+%{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS -Os -fomit-frame-pointer }%{?debug:-O0 -g} \
+	-nostdinc -I%{_libdir}/gcc-lib/%{_host_alias}/2.95.3/include"
 
 %install
 rm -rf $RPM_BUILD_ROOT
