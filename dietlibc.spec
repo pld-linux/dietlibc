@@ -1,6 +1,6 @@
 Summary:	C library optimized for size
 Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
-Summary(pt_BR): libc pequena otimizada para tamanho
+Summary(pt_BR):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.22
 Release:	2
@@ -31,7 +31,7 @@ estaticamente linkados para Linux.
 %package devel
 Summary:	Development files for dietlibc
 Summary(pl):	Pliki dla programistów u¿ywaj±cych dietlibc
-Summary(pt_BR): libc pequena otimizada para tamanho
+Summary(pt_BR):	libc pequena otimizada para tamanho
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}
 
