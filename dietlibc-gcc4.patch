@@ -1,0 +1,72 @@
+
+ dyn_start.c       |    6 ++----
+ libdl/_dl_alloc.c |    6 ------
+ libdl/_dl_main.c  |    6 +++---
+ 3 files changed, 5 insertions(+), 13 deletions(-)
+
+--- dietlibc-0.28/dyn_start.c.orig	2004-11-30 23:35:14.000000000 +0100
++++ dietlibc-0.28/dyn_start.c	2005-02-11 02:39:07.558115344 +0100
+@@ -29,12 +29,10 @@
+ 
+ #ifndef __DYN_LIB_SHARED
+ /* pre main, post _start */
+-int _dyn_start(int argc, char **argv, char **envp, structor dl_init);
++static __attribute__((section(".init"))) void _init(void);
++int main(int argc, char **argv, char **envp);
+ int _dyn_start(int argc, char **argv, char **envp, structor dl_init)
+ {
+-  static __attribute__((section(".init"))) void _init(void);
+-  int main(int argc, char **argv, char **envp);
+-
+   if (dl_init) atexit(dl_init);
+   _init();
+   atexit(_fini);
+--- dietlibc-0.28/libdl/_dl_alloc.c.orig	2002-03-11 20:21:11.000000000 +0100
++++ dietlibc-0.28/libdl/_dl_alloc.c	2005-02-11 02:45:27.069420856 +0100
+@@ -4,15 +4,9 @@
+ 
+ #include "_dl_int.h"
+ 
+-#ifdef __DIET_LD_SO__
+-static struct _dl_handle*_dl_root_handle=(struct _dl_handle*)0;
+-static struct _dl_handle*_dl_top_handle=(struct _dl_handle*)0;
+-static struct _dl_handle*_dl_free_list=(struct _dl_handle*)0;
+-#else
+ struct _dl_handle*_dl_root_handle=(struct _dl_handle*)0;
+ struct _dl_handle*_dl_top_handle=(struct _dl_handle*)0;
+ struct _dl_handle*_dl_free_list=(struct _dl_handle*)0;
+-#endif
+ 
+ #ifdef __DIET_LD_SO__
+ static
+--- dietlibc-0.28/libdl/_dl_main.c.orig	2005-01-29 03:29:16.000000000 +0100
++++ dietlibc-0.28/libdl/_dl_main.c	2005-02-11 02:43:04.147148344 +0100
+@@ -168,9 +168,9 @@
+   return got;
+ }
+ 
++static void _dl_jump(void);
+ static inline int work_on_pltgot(struct _dl_handle*dh) {
+   /* declare _dl_jump static otherwise we have a GOT access BEFOR we have the resolver */
+-  static void _dl_jump(void);
+   if ((dh->plt_rel)&&(!(dh->flags&RTLD_NOW))) {
+     unsigned long*tmp=dh->pltgot;
+     /* GOT */
+@@ -662,7 +662,7 @@
+ 
+ #ifdef WANT_LD_SO_GDB_SUPPORT
+ /* gdb debug break point */
+-static volatile void _dl_debug_state(void) {
++static void _dl_debug_state(void) {
+ #ifdef DEBUG
+   struct _dl_handle*tmp;
+   pf(__FUNCTION__); pf(": r_state "); ph(_r_debug.r_state); pf("\n");
+@@ -676,7 +676,7 @@
+ }
+ 
+ /* gdb debug init stuff */
+-static struct r_debug _r_debug;
++struct r_debug _r_debug;
+ #endif
+ 
+ /* now reuse some unchanged sources */
