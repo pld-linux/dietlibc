@@ -17,6 +17,7 @@ Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
 Patch3:		%{name}-amd64.patch
 Patch4:		%{name}-pentiumX.patch
+Patch5:		%{name}-gcc34.patch
 URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc
 BuildRequires:	m4
@@ -26,7 +27,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/%{_target_cpu}-linux-dietlibc
 # for some reason known only to rpm there must be "\\|" not "\|" here
-%define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|pentium3\\|pentium4\\|athlon/i386/;s/amd64/x86_64/')
+%define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|pentium.\\|athlon/i386/;s/amd64/x86_64/')
 
 %description
 Small libc for building embedded applications.
@@ -72,6 +73,7 @@ statyczne.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %ifarch sparc
 # generate missing functions
