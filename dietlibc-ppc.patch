@@ -10,3 +10,34 @@ diff -uNr dietlibc-0.18.orig/libdl/_dl_rel.h dietlibc-0.18/libdl/_dl_rel.h
  /* this are RELA only archs: alpha, chris, hppa, ia64, m68k, ppc, sparc, sparc64, sh, s390 */
  
  #define _dl_rel_t	Elf_Rela
+diff -ur dietlibc-0.22/ppc/mmap.S dietlibc-0.22-/ppc/mmap.S
+--- dietlibc-0.22/ppc/mmap.S	2003-07-01 13:01:26.000000000 +0200
++++ dietlibc-0.22-/ppc/mmap.S	2003-07-01 13:01:13.000000000 +0200
+@@ -0,0 +1,27 @@
++        .section        ".text"
++        .align 2
++        .globl mmap
++        .type    mmap,@function
++mmap:
++        stwu 1,-16(1)
++        mflr 0
++        stw 31,12(1)
++        stw 0,20(1)
++        li 0,90
++        sc
++        mfcr 0
++        andis. 9,0,4096
++        mr 31,3
++        bc 12,2,.L4
++        bl __errno_location
++        stw 31,0(3)
++        li 31,-1
++.L4:
++        mr 3,31
++        lwz 0,20(1)
++        mtlr 0
++        lwz 31,12(1)
++        la 1,16(1)
++        blr
++.Lfe1:
++        .size    mmap,.Lfe1-mmap
