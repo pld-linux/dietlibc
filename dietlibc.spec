@@ -9,8 +9,13 @@ License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-ppc.patch
+Patch1:		%{name}-opt.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+%define		dietprefix	%{_prefix}/%{_target_cpu}-linux-dietlibc
+# for some reason known only to rpm there must be "\\|" not "\|" here
+%define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|athlon/i386/')
 
 %description
 Small libc for building embedded applications.
@@ -19,8 +24,8 @@ Small libc for building embedded applications.
 Niewielka libc do budowania aplikacji wbudowanych.
 
 %description -l pt_BR
-A diet libc e' uma libc otimizada para criar pequenos binários estaticamente
-linkados para Linux%package devel.
+A diet libc e' uma libc otimizada para criar pequenos binários
+estaticamente linkados para Linux.
 
 %package devel
 Summary:	Development files for dietlibc
@@ -51,14 +56,15 @@ statyczne.
 
 %prep
 %setup -q 
-%patch -p1
+%patch0 -p1
+%patch1 -p1
 
 %build
-%define dietprefix %{_prefix}/%{_arch}-linux-dietlibc
+OPTFLAGS="%{rpmcflags}"; export OPTFLAGS
 %ifarch sparc sparcv9 
 sparc32 \
 %endif
-%{__make} prefix=%{dietprefix} all 
+%{__make} prefix=%{dietprefix} all
 %ifarch %{ix86}
 %{__make} prefix=%{dietprefix} dyn
 %endif
@@ -74,7 +80,7 @@ mv $RPM_BUILD_ROOT%{dietprefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -rf $RPM_BUILD_ROOT%{dietprefix}/{bin,man}
 rm -f $RPM_BUILD_ROOT%{_bindir}/diet-dyn
 
-cat > $RPM_BUILD_ROOT%{_bindir}/%{_arch}-dietlibc-gcc <<EOF
+cat > $RPM_BUILD_ROOT%{_bindir}/%{_target_cpu}-dietlibc-gcc <<EOF
 #!/bin/sh
 exec %{_bindir}/diet gcc "\$@"
 EOF
@@ -88,9 +94,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc TODO README THANKS CAVEAT CHANGES FAQ BUGS AUTHOR
 %dir %{dietprefix}
-%dir %{dietprefix}/lib-%{_arch}
+%dir %{dietprefix}/lib-%{libarch}
 %ifarch %{ix86}
-%attr(755,root,root) %{dietprefix}/lib-%{_arch}/*.so
+%attr(755,root,root) %{dietprefix}/lib-%{libarch}/*.so
 %{_sysconfdir}/*
 %endif
 
@@ -98,9 +104,9 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*
 %{dietprefix}/include
-%attr(755,root,root) %{dietprefix}/lib-%{_arch}/*.o
+%attr(755,root,root) %{dietprefix}/lib-%{libarch}/*.o
 %{_mandir}/man*/*
 
 %files static
 %defattr(644,root,root,755)
-%{dietprefix}/lib-%{_arch}/*.a
+%{dietprefix}/lib-%{libarch}/*.a
