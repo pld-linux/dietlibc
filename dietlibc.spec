@@ -1,15 +1,21 @@
 Summary:	C library optimized for size
 Name:		dietlibc
-Version:	0.8
+Version:	20010410
 Release:	1
 License:	GPL
 Group:		Development/Libraries
 Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
-Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
+Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.gz
+Patch0:		%{name}-install.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
+
+
+%define	boot /usr/lib/bootdisk
+%define	_prefix %{boot}/usr
+
 
 %description
 Small libc for building embedded applications.
@@ -27,18 +33,21 @@ Small libc for building embedded applications.
 
 %prep
 %setup -q -n %{name}
-( cd include ; ln -s /usr/src/linux/include/linux . )
-( cd include ; ln -s /usr/src/linux/include/asm-i386 asm )
+%patch -p1
+
 
 %build
-# Override normal cflags with optimization for size
-%{__make} CFLAGS="%{!?debug:$RPM_OPT_FLAGS -Os -fomit-frame-pointer }%{?debug:-O0 -g} \
-	-nostdinc -I%{_libdir}/gcc-lib/%{_host_alias}/2.95.3/include"
+make DIETHOME=%{_prefix}
 
 %install
 rm -rf $RPM_BUILD_ROOT
-rm include/asm include/linux
+install -d $RPM_BUILD_ROOT%{_libdir}
+install -d $RPM_BUILD_ROOT%{_bindir}
 %{__make} prefix=%{_prefix} INSTALLPREFIX=$RPM_BUILD_ROOT install
+cp -a include/ $RPM_BUILD_ROOT/%{_includedir}
+
+#rm include/asm include/linux
+
 
 gzip -9nf README THANKS CAVEAT BUGS AUTHOR
 
@@ -48,9 +57,9 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
+%attr(755,root,root) %{_bindir}/*
+%{_libdir}/*
 
 %files devel
 %defattr(644,root,root,755)
-%doc CHANGES TODO
-%{_datadir}/dietlibc/*
-%{_libdir}/*
+%{_includedir}/*
