@@ -8,6 +8,7 @@ Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz2
+# Source0-md5:	877b12ab0b2bbff340095cf2cf074418
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 URL:		http://www.fefe.de/dietlibc/
