@@ -87,7 +87,7 @@ statyczne.
 %endif
 
 %build
-export OPTFLAGS="%{rpmcflags}%{?with_spp: -fno-stack-protector} -fno-strict-aliasing"
+export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
 %ifarch sparc sparcv9
 sparc32 \
 %endif
