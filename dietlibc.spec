@@ -3,17 +3,22 @@ Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.24
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz2
 # Source0-md5:	1dc54e022c2b31fa99a512225ed36150
+Source1:	%{name}-divrem.m4
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
 Patch3:		%{name}-amd64.patch
 URL:		http://www.fefe.de/dietlibc/
+%ifarch sparc
+BuildRequires:	m4
+BuildRequires:	perl-base
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/%{_target_cpu}-linux-dietlibc
@@ -63,6 +68,15 @@ statyczne.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+
+%ifarch sparc
+# generate missing functions
+(echo "define(NAME,\`.div')define(OP,\`div')define(S,\`true')"; cat %{SOURCE1}) \
+	| m4 > sparc/sdiv.S
+(echo "define(NAME,\`.rem')define(OP,\`rem')define(S,\`true')"; cat %{SOURCE1}) \
+	| m4 > sparc/srem.S
+%{__perl} -pi -e 's@(^LIBOBJ.*$)@$1 \$(OBJDIR)/sdiv.o \$(OBJDIR)/srem.o@' sparc/Makefile.add
+%endif
 
 %build
 OPTFLAGS="%{rpmcflags}"; export OPTFLAGS
