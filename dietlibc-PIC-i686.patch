@@ -1,10 +1,11 @@
---- dietlibc-0.27/i386/PIC.h.orig	2004-04-29 16:37:25.000000000 +0200
-+++ dietlibc-0.27/i386/PIC.h	2004-08-18 23:17:33.551210936 +0200
-@@ -6,6 +6,7 @@
+--- dietlibc-0.27/i386/PIC.h.orig	2004-08-18 23:33:27.943121312 +0200
++++ dietlibc-0.27/i386/PIC.h	2004-08-18 23:33:40.108271928 +0200
+@@ -2,6 +2,8 @@
+ #define __I386_PIC_H__
+ #ifdef __DYN_LIB
+ 
++#undef __i686
++
+ #if 1
  /* don't trash the athlon return stack */
  #if (__GNUC__ >= 3)	// FIXME: how do I check for the binutils version ?
- .section .gnu.linkonce.t.__i686.get_pc_thunk.bx,"ax",@progbits
-+#undef __i686
- .global __i686.get_pc_thunk.bx
- .hidden __i686.get_pc_thunk.bx
- .type   __i686.get_pc_thunk.bx,@function
