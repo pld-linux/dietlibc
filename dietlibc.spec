@@ -3,7 +3,7 @@ Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.22
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -11,6 +11,7 @@ Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz
 # Source0-md5:	877b12ab0b2bbff340095cf2cf074418
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
+Patch2:		%{name}-xdrmem-overflow.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -59,6 +60,7 @@ statyczne.
 %setup -q
 %patch0 -p1
 %patch1 -p1
+%patch2 -p1
 
 %build
 OPTFLAGS="%{rpmcflags}"; export OPTFLAGS
