@@ -3,7 +3,6 @@ Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR): libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.17
-Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -39,7 +38,7 @@ programistów.
 Summary:	Static libraries for dietlibc
 Summary(pl):	Biblioteki statyczne dla dietlibc
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name}-devel = %{version}
 
 %description static
 Small libc for building embedded applications - static libraries.
