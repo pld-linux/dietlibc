@@ -33,7 +33,7 @@ Summary:	Development files for dietlibc
 Summary(pl):	Pliki dla programistów u¿ywaj±cych dietlibc
 Summary(pt_BR): libc pequena otimizada para tamanho
 Group:		Development/Libraries
-Requires:	%{name} = %{version}
+Requires:	%{name} = %{epoch}:%{version}
 
 %description devel
 Small libc for building embedded applications - development files.
@@ -46,7 +46,7 @@ programistów.
 Summary:	Static libraries for dietlibc
 Summary(pl):	Biblioteki statyczne dla dietlibc
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}
+Requires:	%{name}-devel = %{epoch}:%{version}
 
 %description static
 Small libc for building embedded applications - static libraries.
