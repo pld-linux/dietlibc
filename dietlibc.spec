@@ -16,6 +16,7 @@ Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
 Patch3:		%{name}-amd64.patch
+Patch4:		%{name}-pentium3.patch
 URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc
 BuildRequires:	m4
@@ -25,7 +26,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/%{_target_cpu}-linux-dietlibc
 # for some reason known only to rpm there must be "\\|" not "\|" here
-%define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|athlon/i386/;s/amd64/x86_64/')
+%define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|pentium3\\|athlon/i386/;s/amd64/x86_64/')
 
 %description
 Small libc for building embedded applications.
@@ -42,7 +43,7 @@ Summary:	Development files for dietlibc
 Summary(pl):	Pliki dla programistów u¿ywaj±cych dietlibc
 Summary(pt_BR):	libc pequena otimizada para tamanho
 Group:		Development/Libraries
-Requires:	%{name} = %{epoch}:%{version}
+Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description devel
 Small libc for building embedded applications - development files.
@@ -55,7 +56,7 @@ programistów.
 Summary:	Static libraries for dietlibc
 Summary(pl):	Biblioteki statyczne dla dietlibc
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}
+Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Small libc for building embedded applications - static libraries.
@@ -70,6 +71,7 @@ statyczne.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
+%patch4 -p1
 
 %ifarch sparc
 # generate missing functions
