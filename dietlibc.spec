@@ -3,14 +3,13 @@ Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR): libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.17
-Release:	2
+Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
 URL:		http://www.fefe.de/dietlibc/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-ExclusiveArch:	%{ix86} sparc sparc64 sparcv9 alpha
 
 %description
 Small libc for building embedded applications.
