@@ -1,5 +1,7 @@
-%bcond_with	pp	# disable stack protector 'coz dietlibc will not work with it!
-
+#
+# Conditional build:
+%bcond_with	ssp	# disable stack-smashing protector 'coz dietlibc will not work with it!
+#
 Summary:	C library optimized for size
 Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR):	libc pequena otimizada para tamanho
