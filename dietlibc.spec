@@ -1,62 +1,54 @@
-%define name	dietlibc
-%define version	0.7.3
-%define release	2mdk
-%define snapver	20010309
-
 Summary:	C library optimized for size
-Name:		%{name}
-Version:	%{version}
-Release:	%{release}
-Copyright:	GPL
-Group:		Development/Other
-BuildRoot:	%{_tmppath}/%{name}-%{version}-build
-Requires:	common-licenses
-
-Source0:	http://www.fefe.de/dietlibc/%{name}-%{snapver}.tar.bz2
-Patch0:		dietlibc-20010308-install-includes.patch.bz2
+Name:		dietlibc
+Version:	0.8
+Release:	1
+License:	GPL
+Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
+BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
 Small libc for building embedded applications.
 
 %package devel
-Group:          Development/C
-Summary:        Development files for dietlibc
-Requires:       %name = %version-%release
+Summary:	Development files for dietlibc
+Group:		Development/Libraries
+Group(de):	Entwicklung/Libraries
+Group(fr):	Development/Librairies
+Group(pl):	Programowanie/Biblioteki
+Requires:	%{name} = %{version}
 
 %description devel
 Small libc for building embedded applications.
 
 %prep
-%setup -q -n %{name}-%{snapver}
-%patch0 -p1
+%setup -q -n %{name}
 ( cd include ; ln -s /usr/src/linux/include/linux . )
 ( cd include ; ln -s /usr/src/linux/include/asm-i386 asm )
 
 %build
 # Override normal cflags with optimization for size
-%make "CFLAGS=-nostdinc -march=i586 -fomit-frame-pointer -Os -I/usr/lib/gcc-lib/i586-mandrake-linux/2.96/include"
+%{__make} "CFLAGS=-nostdinc -march=i586 -fomit-frame-pointer -Os -I%{_libdir}/gcc-lib/i586-mandrake-linux/2.96/include"
 
 %install
+rm -rf $RPM_BUILD_ROOT
 rm include/asm include/linux
-make prefix=%{_prefix} INSTALLPREFIX=$RPM_BUILD_ROOT install
+%{__make} prefix=%{_prefix} INSTALLPREFIX=$RPM_BUILD_ROOT install
+
+gzip -9nf README THANKS CAVEAT BUGS AUTHOR
 
 %clean
 rm -rf $RPM_BUILD_ROOT
 
 %files
-%defattr(-,root,root)
-%doc README THANKS CAVEAT BUGS AUTHOR
+%defattr(644,root,root,755)
+%doc *.gz
 
 %files devel
-%defattr(-,root,root)
+%defattr(644,root,root,755)
 %doc CHANGES TODO
-%{_prefix}/share/dietlibc/*
+%{_datadir}/dietlibc/*
 %{_libdir}/*
-
-%changelog
-* Thu Mar  9 2001 Jeff Garzik <jgarzik@mandrakesoft.com> 0.7.3-2mdk
-- new cvs snapshot, adds mkstemp and syslog support among other things
-- install includes in /usr/share/dietlibc/include (gc suggest)
-
-* Thu Mar  8 2001 Jeff Garzik <jgarzik@mandrakesoft.com> 0.7.3-1mdk
-- first mdk contribs version: pre-0.7.3 cvs snapshot 20010308.
