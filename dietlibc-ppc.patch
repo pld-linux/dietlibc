@@ -41,3 +41,19 @@ diff -ur dietlibc-0.22/ppc/mmap.S dietlibc-0.22-/ppc/mmap.S
 +        blr
 +.Lfe1:
 +        .size    mmap,.Lfe1-mmap
+--- dietlibc-0.24/include/sys/ucontext.h.orig	2003-10-10 15:17:46.000000000 +0200
++++ dietlibc-0.24/include/sys/ucontext.h	2003-11-22 18:21:22.390804792 +0100
+@@ -1,6 +1,13 @@
+ #ifndef _SYS_UCONTEXT_H
+ #define _SYS_UCONTEXT_H
+ 
++/* follow glibc <bits/sigcontext.h> on ppc: */
++#if defined(powerpc) && !defined(sigcontext_struct)
++/* Kernel headers before 2.1.1 define a struct sigcontext_struct, but
++ *    we need sigcontext.  */
++# define sigcontext_struct sigcontext
++#endif
++
+ #include <asm/sigcontext.h>
+ #include <signal.h>
+ 
