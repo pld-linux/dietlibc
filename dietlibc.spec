@@ -55,6 +55,9 @@ statyczne.
 
 %build
 %define dietprefix %{_prefix}/%{_arch}-linux-dietlibc
+%ifarch sparc sparcv9 
+sparc32 \
+%endif
 %{__make} prefix=%{dietprefix} all dyn
 
 %install
@@ -74,8 +77,6 @@ exec %{_bindir}/diet gcc "\$@"
 EOF
 
 rm -rf $RPM_BUILD_ROOT%{dietprefix}/include/{asm,linux}
-
-gzip -9nf TODO README THANKS CAVEAT CHANGES FAQ BUGS AUTHOR
 
 %clean
 rm -rf $RPM_BUILD_ROOT
