@@ -37,7 +37,7 @@ Small libc for building embedded applications.
 
 
 %build
-make DIETHOME=%{_prefix}
+%{__make} DIETHOME=%{_prefix}
 
 %install
 rm -rf $RPM_BUILD_ROOT
