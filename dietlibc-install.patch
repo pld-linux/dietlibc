@@ -1,0 +1,12 @@
+diff -Nur --exclude *~ dietlibc/Makefile dietlibc.new/Makefile
+--- dietlibc/Makefile	Mon Apr  9 17:04:23 2001
++++ dietlibc.new/Makefile	Tue Apr 10 15:02:48 2001
+@@ -67,7 +67,7 @@
+ 	$(CROSS)$(CC) -Iinclude $(CFLAGS) -nostdlib -o $@ $^
+ 
+ $(OBJDIR)/diet: diet.c $(OBJDIR)/start.o $(OBJDIR)/dietlibc.a
+-	$(CROSS)$(CC) -Iinclude $(CFLAGS) -nostdlib -o $@ $^ -DDIETHOME=\"$(PWD)\"
++	$(CROSS)$(CC) -Iinclude $(CFLAGS) -nostdlib -o $@ $^ -DDIETHOME=\"$(DIETHOME)\"
+ 	$(CROSS)strip -R .comment -R .note $@
+ 
+ $(OBJDIR)/djb: $(OBJDIR)/compile $(OBJDIR)/load
