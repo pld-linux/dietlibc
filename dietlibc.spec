@@ -74,7 +74,9 @@ sparc32 \
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_bindir},%{_mandir}/man1}
 
-%{__make} install DESTDIR=$RPM_BUILD_ROOT prefix=%{dietprefix}
+%{__make} install \
+	DESTDIR=$RPM_BUILD_ROOT \
+	prefix=%{dietprefix}
 
 mv $RPM_BUILD_ROOT%{dietprefix}/bin/* $RPM_BUILD_ROOT%{_bindir}
 mv $RPM_BUILD_ROOT%{dietprefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
