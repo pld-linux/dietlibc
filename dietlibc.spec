@@ -5,13 +5,6 @@ Version:	20010410
 Release:	1
 License:	GPL
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.gz
 Patch0:		%{name}-install.patch
 URL:		http://www.fefe.de/dietlibc/
@@ -30,13 +23,6 @@ Niewielka libc do budowania aplikacji wbudowanych.
 Summary:	Development files for dietlibc
 Summary(pl):	Pliki dla programistСw u©ywaj╠cych dietlibc
 Group:		Development/Libraries
-Group(de):	Entwicklung/Libraries
-Group(es):	Desarrollo/Bibliotecas
-Group(fr):	Development/Librairies
-Group(pl):	Programowanie/Biblioteki
-Group(pt_BR):	Desenvolvimento/Bibliotecas
-Group(ru):	Разработка/Библиотеки
-Group(uk):	Розробка/Б╕бл╕отеки
 Requires:	%{name} = %{version}
 
 %description devel
