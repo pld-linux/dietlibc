@@ -1,10 +1,11 @@
 Summary:	C library optimized for size
 Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
+Summary(pt_BR): libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.15
+Version:	0.17
 Release:	1
 Epoch:		2
-License:	GPL
+License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
 URL:		http://www.fefe.de/dietlibc/
@@ -16,9 +17,14 @@ Small libc for building embedded applications.
 %description -l pl
 Niewielka libc do budowania aplikacji wbudowanych.
 
+%description -l pt_BR
+A diet libc e' uma libc otimizada para criar pequenos binários estaticamente
+linkados para Linux%package devel.
+
 %package devel
 Summary:	Development files for dietlibc
 Summary(pl):	Pliki dla programistów u¿ywaj±cych dietlibc
+Summary(pt_BR): libc pequena otimizada para tamanho
 Group:		Development/Libraries
 Requires:	%{name} = %{version}
 
