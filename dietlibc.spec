@@ -16,7 +16,7 @@ Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
 Patch3:		%{name}-amd64.patch
-Patch4:		%{name}-pentium3.patch
+Patch4:		%{name}-pentiumX.patch
 URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc
 BuildRequires:	m4
