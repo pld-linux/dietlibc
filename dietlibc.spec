@@ -19,6 +19,7 @@ Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
 Patch3:		%{name}-amd64.patch
 Patch4:		%{name}-pentiumX.patch
+Patch5:		%{name}-gcc4.patch
 URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc
 BuildRequires:	m4
@@ -74,6 +75,7 @@ statyczne.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %ifarch sparc
 # generate missing functions
