@@ -3,7 +3,7 @@ Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.22
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -76,6 +76,9 @@ sparc32 \
 rm -rf $RPM_BUILD_ROOT
 install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_bindir},%{_mandir}/man1}
 
+%ifarch sparc sparcv9
+sparc32 \
+%endif
 %{__make} install \
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{dietprefix}
