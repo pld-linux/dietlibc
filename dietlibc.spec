@@ -2,7 +2,7 @@ Summary:	C library optimized for size
 Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR): libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.19
+Version:	0.20
 Release:	1
 Epoch:		2
 License:	GPL v2
@@ -58,7 +58,10 @@ statyczne.
 %ifarch sparc sparcv9 
 sparc32 \
 %endif
-%{__make} prefix=%{dietprefix} all dyn
+%{__make} prefix=%{dietprefix} all 
+%ifarch %{ix86}
+%{__make} prefix=%{dietprefix} dyn
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -86,8 +89,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc TODO README THANKS CAVEAT CHANGES FAQ BUGS AUTHOR
 %dir %{dietprefix}
 %dir %{dietprefix}/lib-%{_arch}
+%ifarch %{ix86}
 %attr(755,root,root) %{dietprefix}/lib-%{_arch}/*.so
 %{_sysconfdir}/*
+%endif
 
 %files devel
 %defattr(644,root,root,755)
