@@ -87,7 +87,7 @@ statyczne.
 %endif
 
 %build
-OPTFLAGS="%{rpmcflags} %{?with_pp:-fno-stack-protector}"; export OPTFLAGS
+OPTFLAGS="%{rpmcflags} %{?with_spp:-fno-stack-protector}"; export OPTFLAGS
 %ifarch sparc sparcv9
 sparc32 \
 %endif
