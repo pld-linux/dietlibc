@@ -19,6 +19,7 @@ Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
 Patch3:		%{name}-amd64.patch
 Patch4:		%{name}-pentiumX.patch
+Patch5:		%{name}-PIC-i686.patch
 URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc
 BuildRequires:	m4
@@ -74,6 +75,7 @@ statyczne.
 %patch2 -p1
 %patch3 -p1
 %patch4 -p1
+%patch5 -p1
 
 %ifarch sparc
 # generate missing functions
@@ -85,7 +87,7 @@ statyczne.
 %endif
 
 %build
-OPTFLAGS="%{rpmcflags} %{?with_spp:-fno-stack-protector}"; export OPTFLAGS
+export OPTFLAGS="%{rpmcflags}%{?with_spp: -fno-stack-protector} -fno-strict-aliasing"
 %ifarch sparc sparcv9
 sparc32 \
 %endif
