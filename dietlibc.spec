@@ -1,3 +1,5 @@
+%bcond_with	pp	# disable stack protector 'coz dietlibc will not work with it!
+
 Summary:	C library optimized for size
 Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR):	libc pequena otimizada para tamanho
@@ -79,7 +81,7 @@ statyczne.
 %endif
 
 %build
-OPTFLAGS="%{rpmcflags}"; export OPTFLAGS
+OPTFLAGS="%{rpmcflags} %{?with_pp:-fno-stack-protector}"; export OPTFLAGS
 %ifarch sparc sparcv9
 sparc32 \
 %endif
