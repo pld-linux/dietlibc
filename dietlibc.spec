@@ -8,6 +8,7 @@ Group(de):	Entwicklung/Libraries
 Group(fr):	Development/Librairies
 Group(pl):	Programowanie/Biblioteki
 Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
+URL:		http://www.fefe.de/dietlibc/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
