@@ -1,0 +1,12 @@
+diff -uNr dietlibc-0.18.orig/libdl/_dl_rel.h dietlibc-0.18/libdl/_dl_rel.h
+--- dietlibc-0.18.orig/libdl/_dl_rel.h	Mon Feb 11 21:41:05 2002
++++ dietlibc-0.18/libdl/_dl_rel.h	Mon Aug  5 01:23:10 2002
+@@ -9,7 +9,7 @@
+ 
+ #define _DL_REL_PLT(b,r)	(*(unsigned long*)((b)+(r)->r_offset)+=(unsigned long)(b))
+ 
+-#elif defined(__alpha__) || defined(__hppa__) || defined(__ppc__) || defined(__sparc__) || defined(__s390__)
++#elif defined(__alpha__) || defined(__hppa__) || defined(__powerpc__) || defined(__sparc__) || defined(__s390__)
+ /* this are RELA only archs: alpha, chris, hppa, ia64, m68k, ppc, sparc, sparc64, sh, s390 */
+ 
+ #define _dl_rel_t	Elf_Rela
