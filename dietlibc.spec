@@ -56,13 +56,13 @@ Niewielka libc do budowania aplikacji wbudowanych - biblioteki
 statyczne.
 
 %prep
-%setup -q 
+%setup -q
 %patch0 -p1
 %patch1 -p1
 
 %build
 OPTFLAGS="%{rpmcflags}"; export OPTFLAGS
-%ifarch sparc sparcv9 
+%ifarch sparc sparcv9
 sparc32 \
 %endif
 %{__make} prefix=%{dietprefix} all
