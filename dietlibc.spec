@@ -1,17 +1,14 @@
 Summary:	C library optimized for size
 Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Name:		dietlibc
-Version:	20010410
+Version:	0.15
 Release:	1
+Epoch:		2
 License:	GPL
 Group:		Development/Libraries
 Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.gz
-Patch0:		%{name}-install.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
-
-%define	boot /usr/lib/bootdisk
-%define	_prefix %{boot}/usr
 
 %description
 Small libc for building embedded applications.
@@ -32,23 +29,45 @@ Small libc for building embedded applications - development files.
 Niewielka libc do budowania aplikacji wbudowanych - pliki dla
 programistów.
 
+%package static
+Summary:	Static libraries for dietlibc
+Summary(pl):	Biblioteki statyczne dla dietlibc
+Group:		Development/Libraries
+Requires:	%{name} = %{version}
+
+%description static
+Small libc for building embedded applications - static libraries.
+
+%description static -l pl
+Niewielka libc do budowania aplikacji wbudowanych - biblioteki
+statyczne.
+
 %prep
-%setup -q -n %{name}
-%patch -p1
+%setup -q 
 
 %build
-%{__make} DIETHOME=%{_prefix}
+%define dietprefix %{_prefix}/%{_arch}-linux-dietlibc
+%{__make} prefix=%{dietprefix} all dyn
 
 %install
 rm -rf $RPM_BUILD_ROOT
-install -d $RPM_BUILD_ROOT%{_libdir}
-install -d $RPM_BUILD_ROOT%{_bindir}
-%{__make} prefix=%{_prefix} INSTALLPREFIX=$RPM_BUILD_ROOT install
-cp -a include/ $RPM_BUILD_ROOT/%{_includedir}
+install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_bindir},%{_mandir}/man1}
 
-#rm include/asm include/linux
+%{__make} install DESTDIR=$RPM_BUILD_ROOT prefix=%{dietprefix}
 
-gzip -9nf README THANKS CAVEAT BUGS AUTHOR
+mv $RPM_BUILD_ROOT%{dietprefix}/bin/* $RPM_BUILD_ROOT%{_bindir}
+mv $RPM_BUILD_ROOT%{dietprefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
+rm -rf $RPM_BUILD_ROOT%{dietprefix}/{bin,man}
+rm -f $RPM_BUILD_ROOT%{_bindir}/diet-dyn
+
+cat > $RPM_BUILD_ROOT%{_bindir}/%{_arch}-dietlibc-gcc <<EOF
+#!/bin/sh
+exec %{_bindir}/diet gcc "\$@"
+EOF
+
+rm -rf $RPM_BUILD_ROOT%{dietprefix}/include/{asm,linux}
+
+gzip -9nf TODO README THANKS CAVEAT CHANGES FAQ BUGS AUTHOR
 
 %clean
 rm -rf $RPM_BUILD_ROOT
@@ -56,9 +75,18 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc *.gz
-%attr(755,root,root) %{_bindir}/*
-%{_libdir}/*
+%dir %{dietprefix}
+%dir %{dietprefix}/lib-%{_arch}
+%attr(755,root,root) %{dietprefix}/lib-%{_arch}/*.so
+%{_sysconfdir}/*
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/*
+%attr(755,root,root) %{_bindir}/*
+%{dietprefix}/include
+%attr(755,root,root) %{dietprefix}/lib-%{_arch}/*.o
+%{_mandir}/man*/*
+
+%files static
+%defattr(644,root,root,755)
+%{dietprefix}/lib-%{_arch}/*.a
