@@ -1,15 +1,3 @@
-diff -uNr dietlibc-0.18.orig/libdl/_dl_rel.h dietlibc-0.18/libdl/_dl_rel.h
---- dietlibc-0.23/libdl/_dl_rel.h.orig	2003-02-19 14:18:40.000000000 +0100
-+++ dietlibc-0.23/libdl/_dl_rel.h	2003-09-13 03:42:07.000000000 +0200
-@@ -9,7 +9,7 @@
- 
- #define _DL_REL_PLT(b,r)	(*(unsigned long*)((b)+(r)->r_offset)+=(unsigned long)(b))
- 
--#elif defined(__alpha__) || defined(__hppa__) || defined(__ppc__) || defined(__sparc__) || defined(__s390__) \
-+#elif defined(__alpha__) || defined(__hppa__) || defined(__powerpc__) || defined(__sparc__) || defined(__s390__) \
-   || defined(__x86_64__)
- /* this are RELA only archs: alpha, chris, hppa, ia64, m68k, ppc, sparc, sparc64, sh, s390, x86_64 */
- 
 diff -ur dietlibc-0.22/ppc/mmap.S dietlibc-0.22-/ppc/mmap.S
 --- dietlibc-0.22/ppc/mmap.S	2003-07-01 13:01:26.000000000 +0200
 +++ dietlibc-0.22-/ppc/mmap.S	2003-07-01 13:01:13.000000000 +0200
