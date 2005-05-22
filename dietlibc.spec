@@ -13,7 +13,6 @@ License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz2
 # Source0-md5:	16d31dd7b5f9124e8ea8280c3f646e13
-Source1:	%{name}-divrem.m4
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-athlon.patch
@@ -21,10 +20,6 @@ Patch3:		%{name}-amd64.patch
 Patch4:		%{name}-pentiumX.patch
 Patch5:		%{name}-gcc4.patch
 URL:		http://www.fefe.de/dietlibc/
-%ifarch sparc
-BuildRequires:	m4
-BuildRequires:	perl-base
-%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/%{_target_cpu}-linux-dietlibc
@@ -76,15 +71,6 @@ statyczne.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
-
-%ifarch sparc
-# generate missing functions
-(echo "define(NAME,\`.div')define(OP,\`div')define(S,\`true')"; cat %{SOURCE1}) \
-	| m4 > sparc/sdiv.S
-(echo "define(NAME,\`.rem')define(OP,\`rem')define(S,\`true')"; cat %{SOURCE1}) \
-	| m4 > sparc/srem.S
-%{__perl} -pi -e 's@(^LIBOBJ.*$)@$1 \$(OBJDIR)/sdiv.o \$(OBJDIR)/srem.o@' sparc/Makefile.add
-%endif
 
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
