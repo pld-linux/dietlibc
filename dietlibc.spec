@@ -15,10 +15,8 @@ Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz
 # Source0-md5:	16d31dd7b5f9124e8ea8280c3f646e13
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
-Patch2:		%{name}-athlon.patch
-Patch3:		%{name}-amd64.patch
-Patch4:		%{name}-pentiumX.patch
-Patch5:		%{name}-gcc4.patch
+Patch2:		%{name}-platform.patch
+Patch3:		%{name}-gcc4.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -69,8 +67,6 @@ statyczne.
 %patch1 -p1
 %patch2 -p1
 %patch3 -p1
-%patch4 -p1
-%patch5 -p1
 
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
