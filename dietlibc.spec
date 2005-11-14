@@ -74,10 +74,12 @@ export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-alia
 sparc32 \
 %endif
 %{__make} all \
-	prefix=%{dietprefix}
+	prefix=%{dietprefix} \
+	CC="%{__cc}"
 %ifarch %{ix86}
 %{__make} dyn \
-	prefix=%{dietprefix}
+	prefix=%{dietprefix} \
+	CC="%{__cc}"
 %endif
 
 %install
