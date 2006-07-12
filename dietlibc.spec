@@ -66,8 +66,7 @@ statyczne.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-# shouldn't be needed
-#%patch3 -p1
+%patch3 -p1
 
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
