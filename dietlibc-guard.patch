@@ -1,0 +1,13 @@
+--- dietlibc-0.30/i386/dyn_syscalls.S.orig	2005-10-08 23:11:32.000000000 +0200
++++ dietlibc-0.30/i386/dyn_syscalls.S	2006-07-20 00:55:39.483662000 +0200
+@@ -24,6 +24,10 @@
+ 	ret
+ #endif
+ 
++#ifdef WANT_SSP
++#include "../syscalls.s/__guard.S"
++#endif
++
+ /* ok now include all syscalls.s (*.S) and sysdep *.S */
+ 
+ #include "mmap.S"
