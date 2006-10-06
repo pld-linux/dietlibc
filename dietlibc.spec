@@ -25,7 +25,7 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/%{_target_cpu}-linux-dietlibc
 # for some reason known only to rpm there must be "\\|" not "\|" here
-%define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|pentium.\\|athlon/i386/;s/amd64/x86_64/')
+%define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|pentium.\\|athlon/i386/;s/amd64/x86_64/;s/armv.*/arm/')
 
 %description
 Small libc for building embedded applications.
