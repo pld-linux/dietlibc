@@ -1,0 +1,11 @@
+--- dietlibc-0.30/Makefile.orig	2006-10-06 12:20:29.533089750 +0200
++++ dietlibc-0.30/Makefile	2006-10-06 12:20:50.878423750 +0200
+@@ -8,7 +8,7 @@
+ BINDIR=${prefix}/bin
+ MAN1DIR=${prefix}/man/man1
+ 
+-MYARCH:=$(shell uname -m | sed -e 's/i[4-9]86/i386/' -e 's/armv[3-6]t\?e\?[lb]/arm/')
++MYARCH:=$(shell uname -m | sed -e 's/i[4-9]86/i386/' -e 's/armv[3-6]t\?e\?j\?[lb]/arm/')
+ 
+ # This extra-ugly cruft is here so make will not run uname and sed each
+ # time it looks at $(OBJDIR).  This alone sped up running make when
