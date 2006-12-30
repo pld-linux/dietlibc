@@ -20,7 +20,11 @@ Patch2:		%{name}-platform.patch
 Patch3:		%{name}-gcc4.patch
 Patch4:		%{name}-guard.patch
 Patch5:		%{name}-arm.patch
+Patch6:		%{name}-diet-m.patch
 URL:		http://www.fefe.de/dietlibc/
+%ifarch sparc sparcv9
+BuildRequires:	sparc32
+%endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/%{_target_cpu}-linux-dietlibc
@@ -72,6 +76,7 @@ statyczne.
 %patch3 -p1
 %patch4 -p1
 %patch5 -p1
+%patch6 -p1
 
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
