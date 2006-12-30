@@ -13,3 +13,14 @@
 +  [34]*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -falign-functions=1 -falign-jumps=1 -falign-loops=1 -mpreferred-stack-boundary=2;;
 +  *) echo -O2 ${OPTFLAGS} -pipe -fomit-frame-pointer ;;
  esac
+--- dietlibc-0.30/Makefile.orig	2006-12-30 22:22:02.000000000 +0000
++++ dietlibc-0.30/Makefile	2006-12-30 22:29:57.000000000 +0000
+@@ -100,7 +100,7 @@
+ 
+ profiling: $(OBJDIR)/libgmon.a $(OBJDIR)/pstart.o
+ 
+-CFLAGS=-pipe -nostdinc
++CFLAGS=-pipe -nostdinc $(OPTFLAGS)
+ CROSS=
+ 
+ CC=gcc
