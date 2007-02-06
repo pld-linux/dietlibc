@@ -24,3 +24,14 @@
  CROSS=
  
  CC=gcc
+@@ -132,10 +131,6 @@ include $(ARCH)/Makefile.add
+ 
+ LIBMATHOBJ=$(patsubst %,$(OBJDIR)/%,$(LIBMATH))
+ 
+-ifeq ($(CFLAGS),-pipe -nostdinc)
+-CFLAGS+=-O -fomit-frame-pointer
+-endif
+-
+ ifneq ($(DEBUG),)
+ CFLAGS = -g
+ COMMENT = :
