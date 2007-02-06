@@ -1,5 +1,6 @@
---- dietlibc-0.29/findcflags.sh.orig	2003-05-23 15:03:57.000000000 +0200
-+++ dietlibc-0.29/findcflags.sh	2003-09-13 03:46:17.000000000 +0200
+diff -ur dietlibc-0.30.org/findcflags.sh dietlibc-0.30/findcflags.sh
+--- dietlibc-0.30.org/findcflags.sh	2005-04-23 13:47:18.000000000 +0200
++++ dietlibc-0.30/findcflags.sh	2007-02-06 22:24:17.449538250 +0100
 @@ -1,8 +1,8 @@
  #!/bin/sh
  version=`${1:-gcc} -v 2>&1 |sed -n '/gcc version/ {s/gcc version //;p;}'`
@@ -13,8 +14,9 @@
 +  [34]*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -falign-functions=1 -falign-jumps=1 -falign-loops=1 -mpreferred-stack-boundary=2;;
 +  *) echo -O2 ${OPTFLAGS} -pipe -fomit-frame-pointer ;;
  esac
---- dietlibc-0.30/Makefile.orig	2006-12-30 22:22:02.000000000 +0000
-+++ dietlibc-0.30/Makefile	2006-12-30 22:29:57.000000000 +0000
+diff -ur dietlibc-0.30.org/Makefile dietlibc-0.30/Makefile
+--- dietlibc-0.30.org/Makefile	2006-06-18 20:32:28.000000000 +0200
++++ dietlibc-0.30/Makefile	2007-02-06 22:25:12.368970500 +0100
 @@ -100,7 +100,7 @@
  
  profiling: $(OBJDIR)/libgmon.a $(OBJDIR)/pstart.o
@@ -24,7 +26,7 @@
  CROSS=
  
  CC=gcc
-@@ -132,10 +131,6 @@ include $(ARCH)/Makefile.add
+@@ -132,14 +132,6 @@
  
  LIBMATHOBJ=$(patsubst %,$(OBJDIR)/%,$(LIBMATH))
  
@@ -32,6 +34,10 @@
 -CFLAGS+=-O -fomit-frame-pointer
 -endif
 -
- ifneq ($(DEBUG),)
- CFLAGS = -g
- COMMENT = :
+-ifneq ($(DEBUG),)
+-CFLAGS = -g
+-COMMENT = :
+-endif
+ CFLAGS += -Wall -W -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wno-switch -Wno-unused -Wredundant-decls
+ 
+ PWD=$(shell pwd)
