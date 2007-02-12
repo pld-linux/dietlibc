@@ -3,8 +3,8 @@
 %bcond_with	ssp	# disable stack-smashing protector 'coz dietlibc will not work with it!
 #
 Summary:	C library optimized for size
-Summary(pl.UTF-8):   Biblioteka standardowa C zoptymalizowana na rozmiar
-Summary(pt_BR.UTF-8):   libc pequena otimizada para tamanho
+Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
+Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.30
 Release:	4
@@ -49,8 +49,8 @@ estaticamente linkados para Linux.
 
 %package devel
 Summary:	Development files for dietlibc
-Summary(pl.UTF-8):   Pliki dla programistów używających dietlibc
-Summary(pt_BR.UTF-8):   libc pequena otimizada para tamanho
+Summary(pl.UTF-8):	Pliki dla programistów używających dietlibc
+Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
@@ -63,7 +63,7 @@ programistów.
 
 %package static
 Summary:	Static libraries for dietlibc
-Summary(pl.UTF-8):   Biblioteki statyczne dla dietlibc
+Summary(pl.UTF-8):	Biblioteki statyczne dla dietlibc
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
