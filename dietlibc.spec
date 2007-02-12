@@ -3,8 +3,8 @@
 %bcond_with	ssp	# disable stack-smashing protector 'coz dietlibc will not work with it!
 #
 Summary:	C library optimized for size
-Summary(pl):	Biblioteka standardowa C zoptymalizowana na rozmiar
-Summary(pt_BR):	libc pequena otimizada para tamanho
+Summary(pl.UTF-8):   Biblioteka standardowa C zoptymalizowana na rozmiar
+Summary(pt_BR.UTF-8):   libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.30
 Release:	4
@@ -40,37 +40,37 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Small libc for building embedded applications.
 
-%description -l pl
+%description -l pl.UTF-8
 Niewielka libc do budowania aplikacji wbudowanych.
 
-%description -l pt_BR
-A diet libc e' uma libc otimizada para criar pequenos bin·rios
+%description -l pt_BR.UTF-8
+A diet libc e' uma libc otimizada para criar pequenos bin√°rios
 estaticamente linkados para Linux.
 
 %package devel
 Summary:	Development files for dietlibc
-Summary(pl):	Pliki dla programistÛw uøywaj±cych dietlibc
-Summary(pt_BR):	libc pequena otimizada para tamanho
+Summary(pl.UTF-8):   Pliki dla programist√≥w u≈ºywajƒÖcych dietlibc
+Summary(pt_BR.UTF-8):   libc pequena otimizada para tamanho
 Group:		Development/Libraries
 Requires:	%{name} = %{epoch}:%{version}-%{release}
 
 %description devel
 Small libc for building embedded applications - development files.
 
-%description devel -l pl
+%description devel -l pl.UTF-8
 Niewielka libc do budowania aplikacji wbudowanych - pliki dla
-programistÛw.
+programist√≥w.
 
 %package static
 Summary:	Static libraries for dietlibc
-Summary(pl):	Biblioteki statyczne dla dietlibc
+Summary(pl.UTF-8):   Biblioteki statyczne dla dietlibc
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Small libc for building embedded applications - static libraries.
 
-%description static -l pl
+%description static -l pl.UTF-8
 Niewielka libc do budowania aplikacji wbudowanych - biblioteki
 statyczne.
 
