@@ -1,0 +1,12 @@
+diff -urN dietlibc-0.30.org/sparc/strcmp.S dietlibc-0.30/sparc/strcmp.S
+--- dietlibc-0.30.org/sparc/strcmp.S	2003-09-04 03:50:50.000000000 +0200
++++ dietlibc-0.30/sparc/strcmp.S	2007-06-14 12:16:41.325010165 +0200
+@@ -11,6 +11,8 @@
+ 
+ .text
+ .globl strcmp
++.weak strcoll
++strcoll:
+ strcmp:
+ 	clr %o4
+ .Lloop:
