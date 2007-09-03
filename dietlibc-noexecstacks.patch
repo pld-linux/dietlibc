@@ -941,17 +941,6 @@ diff -NurpP dietlibc-0.30/i386/cos.S dietlibc-0.30-execstack/i386/cos.S
 +#ifdef __ELF__
 +.section .note.GNU-stack,"",%progbits
 +#endif
-diff -NurpP dietlibc-0.30/i386/dyn_syscalls.S dietlibc-0.30-execstack/i386/dyn_syscalls.S
---- dietlibc-0.30/i386/dyn_syscalls.S	2005-10-08 23:11:32.000000000 +0200
-+++ dietlibc-0.30-execstack/i386/dyn_syscalls.S	2006-09-07 12:24:13.087171750 +0200
-@@ -388,3 +388,7 @@ __unified_syscall:
- 
- #include "__longjmp.S"
- #include "setjmp.S"
-+
-+#ifdef __ELF__
-+.section .note.GNU-stack,"",%progbits
-+#endif
 diff -NurpP dietlibc-0.30/i386/exp10.S dietlibc-0.30-execstack/i386/exp10.S
 --- dietlibc-0.30/i386/exp10.S	2001-07-30 15:52:55.000000000 +0200
 +++ dietlibc-0.30-execstack/i386/exp10.S	2006-09-07 12:24:13.079171250 +0200
@@ -6494,17 +6483,6 @@ diff -NurpP dietlibc-0.30/x86_64/connect.S dietlibc-0.30-execstack/x86_64/connec
  #include "syscalls.h"
  
  syscall(connect, connect);
-+
-+#ifdef __ELF__
-+.section .note.GNU-stack,"",%progbits
-+#endif
-diff -NurpP dietlibc-0.30/x86_64/dyn_syscalls.S dietlibc-0.30-execstack/x86_64/dyn_syscalls.S
---- dietlibc-0.30/x86_64/dyn_syscalls.S	2005-10-08 23:11:32.000000000 +0200
-+++ dietlibc-0.30-execstack/x86_64/dyn_syscalls.S	2006-09-07 12:24:13.075171000 +0200
-@@ -297,3 +297,7 @@ _unified_syscall:
- 
- #define __errno_location __errno_location@PLT
- #include "x86_64/gettimeofday.S"
 +
 +#ifdef __ELF__
 +.section .note.GNU-stack,"",%progbits
