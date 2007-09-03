@@ -6,13 +6,13 @@ Summary:	C library optimized for size
 Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.30
-Release:	5
+Version:	0.31
+Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	2465d652fff6f1fad3da3b98e60e83c9
+# Source0-md5:	acb98d469ee932d902fdf6de07802b7c
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-platform.patch
