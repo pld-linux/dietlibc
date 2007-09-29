@@ -7,7 +7,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.31
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -97,11 +97,11 @@ export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-alia
 %ifarch sparc sparcv9
 sparc32 \
 %endif
-%{__make} all \
+%{__make} -j1 all \
 	prefix=%{dietprefix} \
 	CC="%{__cc}"
 %ifarch %{ix86}
-%{__make} dyn \
+%{__make} -j1 dyn \
 	prefix=%{dietprefix} \
 	CC="%{__cc}"
 %endif
