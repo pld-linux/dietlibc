@@ -1,0 +1,2 @@
+- run %build in sparc32 environment on sparc/sparcv9,
+- remove gzipping %doc.
