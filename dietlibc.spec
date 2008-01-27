@@ -139,15 +139,18 @@ rm -rf $RPM_BUILD_ROOT
 %dir %{dietprefix}/lib-%{libarch}
 %ifarch %{ix86}
 %attr(755,root,root) %{dietprefix}/lib-%{libarch}/*.so
-%{_sysconfdir}/*
+%{_sysconfdir}/diet.ld.conf
 %endif
 
 %files devel
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/*-dietlibc-gcc
+%attr(755,root,root) %{_bindir}/diet
+%attr(755,root,root) %{_bindir}/dnsd
+%attr(755,root,root) %{_bindir}/elftrunc
+%{dietprefix}/lib-%{libarch}/*.o
 %{dietprefix}/include
-%attr(755,root,root) %{dietprefix}/lib-%{libarch}/*.o
-%{_mandir}/man*/*
+%{_mandir}/man1/diet.1*
 
 %files static
 %defattr(644,root,root,755)
