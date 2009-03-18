@@ -78,8 +78,8 @@ Niewielka libc do budowania aplikacji wbudowanych - biblioteki
 statyczne.
 
 %prep
-dos2unix arm/md5asm.S
 %setup -q
+dos2unix arm/md5asm.S
 %patch14 -p1
 %patch0 -p1
 %patch1 -p1
