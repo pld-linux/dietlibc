@@ -33,6 +33,7 @@ URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc sparcv9
 BuildRequires:	sparc32
 %endif
+BuildRequires:	dos2unix
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/lib/dietlibc
@@ -77,6 +78,7 @@ Niewielka libc do budowania aplikacji wbudowanych - biblioteki
 statyczne.
 
 %prep
+dos2unix arm/md5asm.S
 %setup -q
 %patch14 -p1
 %patch0 -p1
