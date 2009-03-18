@@ -571,9 +571,9 @@ diff -NurpP dietlibc-0.30/arm/clone.S dietlibc-0.30-execstack/arm/clone.S
 --- dietlibc-0.30/arm/clone.S	2002-02-28 17:27:02.000000000 +0100
 +++ dietlibc-0.30-execstack/arm/clone.S	2006-09-07 12:24:13.115173500 +0200
 @@ -32,3 +32,7 @@ __clone:
- 
  1:	b	_exit			@ branch to _exit (PIC safe)
  
+ #endif
 +
 +#ifdef __ELF__
 +.section .note.GNU-stack,"",%progbits
@@ -582,9 +582,9 @@ diff -NurpP dietlibc-0.30/arm/dyn_syscalls.S dietlibc-0.30-execstack/arm/dyn_sys
 --- dietlibc-0.30/arm/dyn_syscalls.S	2005-10-08 23:22:09.000000000 +0200
 +++ dietlibc-0.30-execstack/arm/dyn_syscalls.S	2006-09-07 12:24:13.115173500 +0200
 @@ -289,3 +289,7 @@ __exit:
- 
  #include "__longjmp.S"
  #include "setjmp.S"
+ #include "__guard.S"
 +
 +#ifdef __ELF__
 +.section .note.GNU-stack,"",%progbits
@@ -637,9 +637,9 @@ diff -NurpP dietlibc-0.30/arm/mmap.S dietlibc-0.30-execstack/arm/mmap.S
 --- dietlibc-0.30/arm/mmap.S	2002-02-18 20:57:39.000000000 +0100
 +++ dietlibc-0.30-execstack/arm/mmap.S	2006-09-07 12:24:13.115173500 +0200
 @@ -22,3 +22,7 @@ mmap:
- 	add	sp, sp, #16
  	b	__unified_syscall
  
+ #endif
 +
 +#ifdef __ELF__
 +.section .note.GNU-stack,"",%progbits
@@ -672,7 +672,7 @@ diff -NurpP dietlibc-0.30/arm/start.S dietlibc-0.30-execstack/arm/start.S
 @@ -73,3 +73,7 @@ _exit:
  
  
- 
+ #endif
 +
 +#ifdef __ELF__
 +.section .note.GNU-stack,"",%progbits
@@ -6824,6 +6824,358 @@ diff -NurpP dietlibc-0.30/x86_64/waitpid.S dietlibc-0.30-execstack/x86_64/waitpi
  	xor	%rcx,%rcx
  	mov	$__NR_wait4,%al
  	jmp	__unified_syscall
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/accept.S dietlibc-0.31-x/arm/accept.S
+--- dietlibc-0.31/arm/accept.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/accept.S	2009-03-17 22:54:05.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(accept,accept)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/__aeabi_unwind_cpp.S dietlibc-0.31-x/arm/__aeabi_unwind_cpp.S
+--- dietlibc-0.31/arm/__aeabi_unwind_cpp.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/__aeabi_unwind_cpp.S	2009-03-17 22:54:01.000000000 +0100
+@@ -19,3 +19,7 @@
+ .size __aeabi_unwind_cpp_pr0,.-__aeabi_unwind_cpp_pr0
+ .size __aeabi_unwind_cpp_pr1,.-__aeabi_unwind_cpp_pr1
+ .size __aeabi_unwind_cpp_pr2,.-__aeabi_unwind_cpp_pr2
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/bind.S dietlibc-0.31-x/arm/bind.S
+--- dietlibc-0.31/arm/bind.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/bind.S	2009-03-17 22:54:04.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(bind,bind)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/connect.S dietlibc-0.31-x/arm/connect.S
+--- dietlibc-0.31/arm/connect.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/connect.S	2009-03-17 22:53:52.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(connect,connect)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/getpeername.S dietlibc-0.31-x/arm/getpeername.S
+--- dietlibc-0.31/arm/getpeername.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/getpeername.S	2009-03-17 22:53:57.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(getpeername,getpeername)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/getsockname.S dietlibc-0.31-x/arm/getsockname.S
+--- dietlibc-0.31/arm/getsockname.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/getsockname.S	2009-03-17 22:53:53.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(getsockname,getsockname)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/listen.S dietlibc-0.31-x/arm/listen.S
+--- dietlibc-0.31/arm/listen.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/listen.S	2009-03-17 22:53:56.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(listen,listen)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/recvfrom.S dietlibc-0.31-x/arm/recvfrom.S
+--- dietlibc-0.31/arm/recvfrom.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/recvfrom.S	2009-03-17 22:53:50.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(recvfrom,recvfrom)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/recvmsg.S dietlibc-0.31-x/arm/recvmsg.S
+--- dietlibc-0.31/arm/recvmsg.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/recvmsg.S	2009-03-17 22:53:46.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(recvmsg,recvmsg)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/recv.S dietlibc-0.31-x/arm/recv.S
+--- dietlibc-0.31/arm/recv.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/recv.S	2009-03-17 22:53:41.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(recv,recv)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/sendmsg.S dietlibc-0.31-x/arm/sendmsg.S
+--- dietlibc-0.31/arm/sendmsg.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/sendmsg.S	2009-03-17 22:53:44.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(sendmsg,sendmsg)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/send.S dietlibc-0.31-x/arm/send.S
+--- dietlibc-0.31/arm/send.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/send.S	2009-03-17 22:53:37.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(send,send)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/sendto.S dietlibc-0.31-x/arm/sendto.S
+--- dietlibc-0.31/arm/sendto.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/sendto.S	2009-03-17 22:53:49.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(sendto,sendto)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/setsockopt.S dietlibc-0.31-x/arm/setsockopt.S
+--- dietlibc-0.31/arm/setsockopt.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/setsockopt.S	2009-03-17 22:53:55.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(setsockopt,setsockopt)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/shutdown.S dietlibc-0.31-x/arm/shutdown.S
+--- dietlibc-0.31/arm/shutdown.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/shutdown.S	2009-03-17 22:53:47.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(shutdown,shutdown)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/socketpair.S dietlibc-0.31-x/arm/socketpair.S
+--- dietlibc-0.31/arm/socketpair.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/socketpair.S	2009-03-17 22:54:02.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(socketpair,socketpair)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/arm/socket.S dietlibc-0.31-x/arm/socket.S
+--- dietlibc-0.31/arm/socket.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/arm/socket.S	2009-03-17 22:53:43.000000000 +0100
+@@ -5,3 +5,7 @@
+ syscall(socket,socket)
+ 
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/i386/dyn_syscalls.S dietlibc-0.31-x/i386/dyn_syscalls.S
+--- dietlibc-0.31/i386/dyn_syscalls.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/i386/dyn_syscalls.S	2009-03-17 22:53:34.000000000 +0100
+@@ -397,3 +397,7 @@
+ #include "setjmp.S"
+ 
+ #include "syscalls.s/__guard.S"
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/parisc/mmap2.S dietlibc-0.31-x/parisc/mmap2.S
+--- dietlibc-0.31/parisc/mmap2.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/parisc/mmap2.S	2009-03-17 22:53:36.000000000 +0100
+@@ -4,3 +4,7 @@
+ syscall6(mmap2,__mmap2)
+ #endif
+ 
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/ppc/mmap.S dietlibc-0.31-x/ppc/mmap.S
+--- dietlibc-0.31/ppc/mmap.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/ppc/mmap.S	2009-03-17 22:54:07.000000000 +0100
+@@ -25,3 +25,7 @@
+         blr
+ .Lfe1:
+         .size    mmap,.Lfe1-mmap
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/syscalls.s/__signalfd.S dietlibc-0.31-x/syscalls.s/__signalfd.S
+--- dietlibc-0.31/syscalls.s/__signalfd.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/syscalls.s/__signalfd.S	2009-03-17 22:53:13.000000000 +0100
+@@ -3,3 +3,7 @@
+ #ifdef __NR_signalfd
+ syscall(signalfd,__signalfd)
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/syscalls.s/splice.S dietlibc-0.31-x/syscalls.s/splice.S
+--- dietlibc-0.31/syscalls.s/splice.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/syscalls.s/splice.S	2009-03-17 22:53:11.000000000 +0100
+@@ -3,3 +3,7 @@
+ #ifdef __NR_splice
+ syscall(splice,splice)
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/syscalls.s/tee.S dietlibc-0.31-x/syscalls.s/tee.S
+--- dietlibc-0.31/syscalls.s/tee.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/syscalls.s/tee.S	2009-03-17 22:52:34.000000000 +0100
+@@ -3,3 +3,7 @@
+ #ifdef __NR_tee
+ syscall(tee,tee)
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/syscalls.s/timerfd.S dietlibc-0.31-x/syscalls.s/timerfd.S
+--- dietlibc-0.31/syscalls.s/timerfd.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/syscalls.s/timerfd.S	2009-03-17 22:53:09.000000000 +0100
+@@ -3,3 +3,7 @@
+ #ifdef __NR_timerfd
+ syscall(timerfd,__timerfd)
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/syscalls.s/vmsplice.S dietlibc-0.31-x/syscalls.s/vmsplice.S
+--- dietlibc-0.31/syscalls.s/vmsplice.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/syscalls.s/vmsplice.S	2009-03-17 22:53:15.000000000 +0100
+@@ -3,3 +3,7 @@
+ #ifdef __NR_vmsplice
+ syscall(vmsplice,vmsplice)
+ #endif
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/x86_64/arch_prctl.S dietlibc-0.31-x/x86_64/arch_prctl.S
+--- dietlibc-0.31/x86_64/arch_prctl.S	2006-10-14 01:59:50.000000000 +0200
++++ dietlibc-0.31-x/x86_64/arch_prctl.S	2009-03-17 22:53:19.000000000 +0100
+@@ -1,3 +1,7 @@
+ #include "syscalls.h"
+ 
+ syscall(arch_prctl,arch_prctl)
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/x86_64/dyn_syscalls.S dietlibc-0.31-x/x86_64/dyn_syscalls.S
+--- dietlibc-0.31/x86_64/dyn_syscalls.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/x86_64/dyn_syscalls.S	2009-03-17 22:53:22.000000000 +0100
+@@ -302,3 +302,7 @@
+ #include "x86_64/gettimeofday.S"
+ 
+ #include "syscalls.s/__guard.S"
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/x86_64/getpriority.S dietlibc-0.31-x/x86_64/getpriority.S
+--- dietlibc-0.31/x86_64/getpriority.S	2007-03-26 05:06:59.000000000 +0200
++++ dietlibc-0.31-x/x86_64/getpriority.S	2009-03-17 22:53:25.000000000 +0100
+@@ -10,3 +10,7 @@
+      neg     %rax    /* the value is bios by 20 to avoid negative values */
+      add     $20,%rax
+      ret
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/x86_64/strchr.S dietlibc-0.31-x/x86_64/strchr.S
+--- dietlibc-0.31/x86_64/strchr.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/x86_64/strchr.S	2009-03-17 22:53:23.000000000 +0100
+@@ -18,3 +18,7 @@
+ .Lfound:
+ 	lea	-1(%rsi),%rax
+ 	ret
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/x86_64/strcmp.S dietlibc-0.31-x/x86_64/strcmp.S
+--- dietlibc-0.31/x86_64/strcmp.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/x86_64/strcmp.S	2009-03-17 22:53:32.000000000 +0100
+@@ -25,3 +25,7 @@
+ 	sbb %eax,%eax
+ 	or $1,%eax
+ 	ret
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/x86_64/strcpy.S dietlibc-0.31-x/x86_64/strcpy.S
+--- dietlibc-0.31/x86_64/strcpy.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/x86_64/strcpy.S	2009-03-17 22:53:17.000000000 +0100
+@@ -13,3 +13,7 @@
+ 
+ 	mov %rdx,%rax
+ 	ret
++
++#ifdef __ELF__
++.section .note.GNU-stack,"",%progbits
++#endif
+diff -ur dietlibc-0.31/x86_64/time.S dietlibc-0.31-x/x86_64/time.S
+--- dietlibc-0.31/x86_64/time.S	2009-03-17 22:54:20.000000000 +0100
++++ dietlibc-0.31-x/x86_64/time.S	2009-03-17 22:53:26.000000000 +0100
+@@ -19,3 +19,7 @@
+ 	ret
+ .Lhere:
+ 	.size	 time,.Lhere-time
 +
 +#ifdef __ELF__
 +.section .note.GNU-stack,"",%progbits
