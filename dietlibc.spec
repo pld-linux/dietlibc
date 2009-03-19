@@ -7,7 +7,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.31
-Release:	5
+Release:	6
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -29,6 +29,8 @@ Patch11:	%{name}-_syscall-no-arch.patch
 Patch12:	%{name}-noexecstacks.patch
 Patch13:	%{name}-strcoll.patch
 Patch14:	%{name}-cvs.patch
+Patch15:	%{name}-memalign.patch
+Patch16:	%{name}-getsubopt.patch
 URL:		http://www.fefe.de/dietlibc/
 %ifarch sparc sparcv9
 BuildRequires:	sparc32
@@ -95,6 +97,8 @@ dos2unix arm/md5asm.S
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch15 -p1
+%patch16 -p1
 
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
