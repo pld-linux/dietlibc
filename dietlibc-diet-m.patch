@@ -1,6 +1,6 @@
 --- dietlibc-0.30/diet.c.orig	2006-12-31 12:01:17.000000000 +0000
 +++ dietlibc-0.30/diet.c	2006-12-31 12:02:59.000000000 +0000
-@@ -146,22 +146,30 @@
+@@ -146,22 +146,32 @@
        else if (!strncmp(shortplatform, "pentium3", 8)) strcpy(shortplatform, "i386");
        else if (!strncmp(shortplatform, "athlon", 6)) strcpy(shortplatform, "i386");
        else if (!strncmp(shortplatform, "amd64", 5)) strcpy(shortplatform, "x86_64");
@@ -8,6 +8,8 @@
 +      else if (!strncmp(shortplatform, "i386", 4) && (m==64)) strcpy(shortplatform, "x86_64");
 +      else if (!strncmp(shortplatform, "sparc64", 7) && (m==32)) strcpy(shortplatform, "sparc");
 +      else if (!strncmp(shortplatform, "sparc", 5) && (m==64)) strcpy(shortplatform, "sparc64");
++      else if (!strncmp(shortplatform, "sparcv9", 7) && (m==32)) strcpy(shortplatform, "sparc");
++      else if (!strncmp(shortplatform, "sparcv9", 7) && (m==64)) strcpy(shortplatform, "sparc64");
 +      else if (!strncmp(shortplatform, "ppc64", 5) && (m==32)) strcpy(shortplatform, "ppc");
 +      else if (!strncmp(shortplatform, "ppc", 3) && (m==64)) strcpy(shortplatform, "ppc64");
 +      else if (!strncmp(shortplatform, "s390x", 5) && (m==32)) strcpy(shortplatform, "s390");
