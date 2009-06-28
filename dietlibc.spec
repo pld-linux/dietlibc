@@ -6,13 +6,13 @@ Summary:	C library optimized for size
 Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.31
-Release:	7
+Version:	0.32
+Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	acb98d469ee932d902fdf6de07802b7c
+# Source0-md5:	0098761c17924c15e21d25acdda4a8b5
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-platform.patch
@@ -28,7 +28,6 @@ Patch10:	%{name}-fflush-null.patch
 Patch11:	%{name}-_syscall-no-arch.patch
 Patch12:	%{name}-noexecstacks.patch
 Patch13:	%{name}-strcoll.patch
-Patch14:	%{name}-cvs.patch
 Patch15:	%{name}-memalign.patch
 Patch16:	%{name}-getsubopt.patch
 URL:		http://www.fefe.de/dietlibc/
@@ -82,7 +81,6 @@ statyczne.
 %prep
 %setup -q
 dos2unix arm/md5asm.S
-%patch14 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
