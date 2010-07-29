@@ -31,10 +31,11 @@ Patch13:	%{name}-strcoll.patch
 Patch15:	%{name}-memalign.patch
 Patch16:	%{name}-getsubopt.patch
 URL:		http://www.fefe.de/dietlibc/
+BuildRequires:	rpmbuild(macros) >= 1.566
+BuildRequires:	sed >= 4.0
 %ifarch sparc sparcv9
 BuildRequires:	sparc32
 %endif
-BuildRequires:	dos2unix
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %define		dietprefix	%{_prefix}/lib/dietlibc
@@ -80,7 +81,7 @@ statyczne.
 
 %prep
 %setup -q
-dos2unix arm/md5asm.S
+%undos arm/md5asm.S
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -98,18 +99,23 @@ dos2unix arm/md5asm.S
 %patch15 -p1
 %patch16 -p1
 
+%if "%{cc_version}" < "3.4"
+%{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
+%endif
+
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
 %ifarch sparc sparcv9
 sparc32 \
 %endif
+CC="%{__cc}"
 %{__make} -j1 all \
 	prefix=%{dietprefix} \
-	CC="%{__cc}"
+	CC="${CC#*ccache }"
 %ifarch %{ix86}
 %{__make} -j1 dyn \
 	prefix=%{dietprefix} \
-	CC="%{__cc}"
+	CC="${CC#*ccache }"
 %endif
 
 %install
