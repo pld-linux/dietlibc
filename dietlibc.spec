@@ -105,17 +105,17 @@ statyczne.
 
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing"
+CC="%{__cc}"
 %ifarch sparc sparcv9
 sparc32 \
 %endif
-CC="%{__cc}"
 %{__make} -j1 all \
 	prefix=%{dietprefix} \
 	CC="${CC#*ccache }"
+
 %ifarch %{ix86}
 %{__make} -j1 dyn \
-	prefix=%{dietprefix} \
-	CC="${CC#*ccache }"
+	prefix=%{dietprefix}
 %endif
 
 %install
@@ -134,9 +134,9 @@ mv $RPM_BUILD_ROOT%{dietprefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -rf $RPM_BUILD_ROOT%{dietprefix}/{bin,man}
 rm -f $RPM_BUILD_ROOT%{_bindir}/diet-dyn
 
-cat > $RPM_BUILD_ROOT%{_bindir}/%{_target_cpu}-dietlibc-gcc <<EOF
+cat > $RPM_BUILD_ROOT%{_bindir}/%{_target_cpu}-dietlibc-gcc <<'EOF'
 #!/bin/sh
-exec %{_bindir}/diet gcc "\$@"
+exec %{_bindir}/diet gcc "$@"
 EOF
 
 %clean
