@@ -1,0 +1,3 @@
+- added ExclusiveArch: due to: libdl/_dl_rel.h:22: #error "_dl_rel.h: NOT SUPPORTED"
+  on PPC
+- rel.2.
