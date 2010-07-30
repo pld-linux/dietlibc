@@ -178,7 +178,6 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_bindir}/*-dietlibc-gcc
 %attr(755,root,root) %{_bindir}/diet
-%attr(755,root,root) %{_bindir}/dnsd
 %attr(755,root,root) %{_bindir}/elftrunc
 %{dietprefix}/lib-%{libarch}/*.o
 %{dietprefix}/include
