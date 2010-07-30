@@ -1,7 +1,12 @@
 #
 # Conditional build:
 %bcond_with	ssp	# disable stack-smashing protector 'coz dietlibc will not work with it!
-#
+%bcond_without	dynamic	# dynamic lib support
+
+%ifnarch %{ix86} %{x8664} arm
+%undefine	with_dynamic
+%endif
+
 Summary:	C library optimized for size
 Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
@@ -51,6 +56,17 @@ Niewielka libc do budowania aplikacji wbudowanych.
 %description -l pt_BR.UTF-8
 A diet libc e' uma libc otimizada para criar pequenos binários
 estaticamente linkados para Linux.
+
+%package libs
+Summary:	Dynamic libraries for dietlibc
+Group:		Libraries
+
+%description libs
+The diet libc is a libc that is optimized for small size. It can be
+used to create small statically linked binaries for Linux on alpha,
+arm, hppa, ia64, i386, mips, s390, sparc, sparc64, ppc and x86_64.
+
+This package contains the dynamic libraries for dietlibc.
 
 %package devel
 Summary:	Development files for dietlibc
@@ -113,7 +129,8 @@ sparc32 \
 	prefix=%{dietprefix} \
 	CC="${CC#*ccache }"
 
-%ifarch %{ix86}
+%if %{with dynamic}
+# 'dyn' target is not SMP safe
 %{__make} -j1 dyn \
 	prefix=%{dietprefix} \
 	CC="${CC}"
@@ -134,6 +151,7 @@ mv $RPM_BUILD_ROOT%{dietprefix}/bin/* $RPM_BUILD_ROOT%{_bindir}
 mv $RPM_BUILD_ROOT%{dietprefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
 rm -rf $RPM_BUILD_ROOT%{dietprefix}/{bin,man}
 rm -f $RPM_BUILD_ROOT%{_bindir}/diet-dyn
+rm -f $RPM_BUILD_ROOT%{_bindir}/dnsd
 
 cat > $RPM_BUILD_ROOT%{_bindir}/%{_target_cpu}-dietlibc-gcc <<'EOF'
 #!/bin/sh
@@ -148,7 +166,10 @@ rm -rf $RPM_BUILD_ROOT
 %doc AUTHOR BUGS CAVEAT CHANGES FAQ README THANKS TODO
 %dir %{dietprefix}
 %dir %{dietprefix}/lib-%{libarch}
-%ifarch %{ix86}
+
+%if %{with dynamic}
+%files libs
+%defattr(644,root,root,755)
 %attr(755,root,root) %{dietprefix}/lib-%{libarch}/*.so
 %{_sysconfdir}/diet.ld.conf
 %endif
