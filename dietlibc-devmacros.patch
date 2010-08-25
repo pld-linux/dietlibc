@@ -1,0 +1,24 @@
+diff -ur dietlibc-0.32/include/sys/stat.h dietlibc-0.32-devmacros/include/sys/stat.h
+--- dietlibc-0.32/include/sys/stat.h	2007-07-02 20:20:56.000000000 +0200
++++ dietlibc-0.32-devmacros/include/sys/stat.h	2010-08-25 02:00:21.000000000 +0200
+@@ -621,9 +592,17 @@
+ #endif
+ #endif
+ 
+-#define major(dev) ({ unsigned long long l=(dev); ((l>>8) & 0xfff) | (l >> 32) & 0xfffff000; })
+-#define minor(dev) ({ unsigned long long l=(dev); (l & 0xff) | ((l>>12)&0xffffff00); })
+-#define makedev(maj,min) ({ unsigned long long a=(maj), i=(min); ((a&0xfff)<<8) | (i&0xff) | ((a&~0xfff)<<32) | ((i&0xfffff00)<<12); })
++#define major(dev) \
++	((unsigned int)((((unsigned long long int)(dev) >> 8) & 0xfff) \
++		| ((unsigned int) ((unsigned long long int)(dev) >> 32) & ~0xfff)))
++#define minor(dev) \
++	((unsigned int)(((unsigned long long int)(dev) & 0xff) \
++		| ((unsigned int) ((unsigned long long int)(dev) >> 12) & ~0xff)))
++#define makedev(maj,min) \
++	((unsigned long long int)(((unsigned int)(minor) & 0xff) \
++		| (((unsigned int)(major) & 0xfff) << 8) \
++		| (((unsigned long long int) ((minor) & ~0xff)) << 12) \
++		| (((unsigned long long int) ((major) & ~0xfff)) << 32)))
+ 
+ extern int chmod (const char *__file, mode_t __mode) __THROW;
+ extern int fchmod (int __fd, mode_t __mode) __THROW;
