@@ -1,0 +1,191 @@
+--- dietlibc-0.32/include/fcntl.h~	2008-02-19 01:28:13.000000000 +0100
++++ dietlibc-0.32/include/fcntl.h	2010-09-24 19:03:54.093375051 +0200
+@@ -52,6 +52,10 @@
+ #define F_SETLK64	13
+ #define F_SETLKW64	14
+ 
++#define F_SETLEASE	1024	/* Set a lease.  */
++#define F_GETLEASE	1025	/* Enquire what lease is active.  */
++#define F_NOTIFY	1026	/* Request notfications on a directory.  */
++
+ #define FD_CLOEXEC	1	/* actually anything with low bit set goes */
+ 
+ /* for posix fcntl() and lockf() */
+@@ -78,6 +82,15 @@
+ #define LOCK_WRITE	128	/* ... Which allows concurrent write operations */
+ #define LOCK_RW		192	/* ... Which allows concurrent read & write ops */
+ 
++/* Types of directory notifications that may be requested with F_NOTIFY.  */
++#define DN_ACCESS	0x00000001	/* File accessed.  */
++#define DN_MODIFY	0x00000002	/* File modified.  */
++#define DN_CREATE	0x00000004	/* File created.  */
++#define DN_DELETE	0x00000008	/* File removed.  */
++#define DN_RENAME	0x00000010	/* File renamed.  */
++#define DN_ATTRIB	0x00000020	/* File changed attibutes.  */
++#define DN_MULTISHOT	0x80000000	/* Don't remove notifier.  */
++
+ struct flock {
+   int16_t l_type;
+   int16_t l_whence;
+@@ -132,6 +145,10 @@
+ #define F_SETSIG	10	/*  for sockets. */
+ #define F_GETSIG	11	/*  for sockets. */
+ 
++#define F_SETLEASE	1024	/* Set a lease.  */
++#define F_GETLEASE	1025	/* Enquire what lease is active.  */
++#define F_NOTIFY	1026	/* Request notfications on a directory.  */
++
+ /* for F_[GET|SET]FL */
+ #define FD_CLOEXEC	1	/* actually anything with low bit set goes */
+ 
+@@ -157,6 +174,15 @@
+ #define LOCK_WRITE     128     /* ... Which allows concurrent write operations */
+ #define LOCK_RW        192     /* ... Which allows concurrent read & write ops */
+ 
++/* Types of directory notifications that may be requested with F_NOTIFY.  */
++#define DN_ACCESS	0x00000001	/* File accessed.  */
++#define DN_MODIFY	0x00000002	/* File modified.  */
++#define DN_CREATE	0x00000004	/* File created.  */
++#define DN_DELETE	0x00000008	/* File removed.  */
++#define DN_RENAME	0x00000010	/* File renamed.  */
++#define DN_ATTRIB	0x00000020	/* File changed attibutes.  */
++#define DN_MULTISHOT	0x80000000	/* Don't remove notifier.  */
++
+ struct flock {
+   int16_t l_type;
+   int16_t l_whence;
+@@ -209,6 +235,10 @@
+ #define F_SETLKW64	35
+ #endif
+ 
++#define F_SETLEASE	1024	/* Set a lease.  */
++#define F_GETLEASE	1025	/* Enquire what lease is active.  */
++#define F_NOTIFY	1026	/* Request notfications on a directory.  */
++
+ /* for F_[GET|SET]FL */
+ #define FD_CLOEXEC	1	/* actually anything with low bit set goes */
+ 
+@@ -236,6 +266,15 @@
+ #define LOCK_WRITE	128	/* ... Which allows concurrent write operations */
+ #define LOCK_RW		192	/* ... Which allows concurrent read & write ops */
+ 
++/* Types of directory notifications that may be requested with F_NOTIFY.  */
++#define DN_ACCESS	0x00000001	/* File accessed.  */
++#define DN_MODIFY	0x00000002	/* File modified.  */
++#define DN_CREATE	0x00000004	/* File created.  */
++#define DN_DELETE	0x00000008	/* File removed.  */
++#define DN_RENAME	0x00000010	/* File renamed.  */
++#define DN_ATTRIB	0x00000020	/* File changed attibutes.  */
++#define DN_MULTISHOT	0x80000000	/* Don't remove notifier.  */
++
+ #ifndef __mips64__
+ struct flock {
+   int16_t l_type;
+@@ -304,6 +343,10 @@
+ #define F_SETLK64	13
+ #define F_SETLKW64	14
+ 
++#define F_SETLEASE	1024	/* Set a lease.  */
++#define F_GETLEASE	1025	/* Enquire what lease is active.  */
++#define F_NOTIFY	1026	/* Request notfications on a directory.  */
++
+ /* for F_[GET|SET]FL */
+ #define FD_CLOEXEC	1	/* actually anything with low bit set goes */
+ 
+@@ -331,6 +374,15 @@
+ #define LOCK_WRITE	128	/* ... Which allows concurrent write operations */
+ #define LOCK_RW		192	/* ... Which allows concurrent read & write ops */
+ 
++/* Types of directory notifications that may be requested with F_NOTIFY.  */
++#define DN_ACCESS	0x00000001	/* File accessed.  */
++#define DN_MODIFY	0x00000002	/* File modified.  */
++#define DN_CREATE	0x00000004	/* File created.  */
++#define DN_DELETE	0x00000008	/* File removed.  */
++#define DN_RENAME	0x00000010	/* File renamed.  */
++#define DN_ATTRIB	0x00000020	/* File changed attibutes.  */
++#define DN_MULTISHOT	0x80000000	/* Don't remove notifier.  */
++
+ struct flock {
+   int16_t l_type;
+   int16_t l_whence;
+@@ -394,6 +446,10 @@
+ #define F_SETLK64	13
+ #define F_SETLKW64	14
+ 
++#define F_SETLEASE	1024	/* Set a lease.  */
++#define F_GETLEASE	1025	/* Enquire what lease is active.  */
++#define F_NOTIFY	1026	/* Request notfications on a directory.  */
++
+ /* for F_[GET|SET]FL */
+ #define FD_CLOEXEC	1	/* actually anything with low bit set goes */
+ 
+@@ -421,6 +477,15 @@
+ #define LOCK_WRITE	128	/* ... Which allows concurrent write operations */
+ #define LOCK_RW		192	/* ... Which allows concurrent read & write ops */
+ 
++/* Types of directory notifications that may be requested with F_NOTIFY.  */
++#define DN_ACCESS	0x00000001	/* File accessed.  */
++#define DN_MODIFY	0x00000002	/* File modified.  */
++#define DN_CREATE	0x00000004	/* File created.  */
++#define DN_DELETE	0x00000008	/* File removed.  */
++#define DN_RENAME	0x00000010	/* File renamed.  */
++#define DN_ATTRIB	0x00000020	/* File changed attibutes.  */
++#define DN_MULTISHOT	0x80000000	/* Don't remove notifier.  */
++
+ struct flock {
+   int16_t l_type;
+   int16_t l_whence;
+@@ -478,6 +543,10 @@
+ #define F_SETLK64	13
+ #define F_SETLKW64	14
+ 
++#define F_SETLEASE	1024	/* Set a lease.  */
++#define F_GETLEASE	1025	/* Enquire what lease is active.  */
++#define F_NOTIFY	1026	/* Request notfications on a directory.  */
++
+ /* for F_[GET|SET]FL */
+ #define FD_CLOEXEC	1	/* actually anything with low bit set goes */
+ 
+@@ -505,6 +574,15 @@
+ #define LOCK_WRITE	128	/* ... Which allows concurrent write operations */
+ #define LOCK_RW		192	/* ... Which allows concurrent read & write ops */
+ 
++/* Types of directory notifications that may be requested with F_NOTIFY.  */
++#define DN_ACCESS	0x00000001	/* File accessed.  */
++#define DN_MODIFY	0x00000002	/* File modified.  */
++#define DN_CREATE	0x00000004	/* File created.  */
++#define DN_DELETE	0x00000008	/* File removed.  */
++#define DN_RENAME	0x00000010	/* File renamed.  */
++#define DN_ATTRIB	0x00000020	/* File changed attibutes.  */
++#define DN_MULTISHOT	0x80000000	/* Don't remove notifier.  */
++
+ struct flock {
+   int16_t l_type;
+   int16_t l_whence;
+@@ -567,6 +645,10 @@
+ #define F_SETSIG    13 /*  for sockets. */
+ #define F_GETSIG    14 /*  for sockets. */
+ 
++#define F_SETLEASE	1024	/* Set a lease.  */
++#define F_GETLEASE	1025	/* Enquire what lease is active.  */
++#define F_NOTIFY	1026	/* Request notfications on a directory.  */
++
+ #define FD_CLOEXEC  1   /* actually anything with low bit set goes */
+ 
+ #define F_RDLCK     1   /* Read lock.  */
+@@ -590,6 +672,15 @@
+ #define LOCK_WRITE     128     /* ... Which allows concurrent write operations */
+ #define LOCK_RW                192     /* ... Which allows concurrent read & write ops */
+ 
++/* Types of directory notifications that may be requested with F_NOTIFY.  */
++#define DN_ACCESS	0x00000001	/* File accessed.  */
++#define DN_MODIFY	0x00000002	/* File modified.  */
++#define DN_CREATE	0x00000004	/* File created.  */
++#define DN_DELETE	0x00000008	/* File removed.  */
++#define DN_RENAME	0x00000010	/* File renamed.  */
++#define DN_ATTRIB	0x00000020	/* File changed attibutes.  */
++#define DN_MULTISHOT	0x80000000	/* Don't remove notifier.  */
++
+ 
+ struct flock
+ {
