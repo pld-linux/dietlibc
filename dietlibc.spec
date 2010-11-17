@@ -51,25 +51,30 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|pentium.\\|athlon/i386/;s/amd64/x86_64/;s/armv.*/arm/;s/sparcv.*/sparc/')
 
 %description
-Small libc for building embedded applications.
+The diet libc is a libc that is optimized for small size. It can be
+used to create small statically linked binaries for Linux on alpha,
+arm, hppa, ia64, i386, mips, s390, sparc, sparc64, ppc and x86_64.
 
 %description -l pl.UTF-8
-Niewielka libc do budowania aplikacji wbudowanych.
+diet libc to biblioteka libc zoptymalizowana pod kątem rozmiaru.
+Może być używana do tworzenia małych, statycznie zlinkowanych
+binariów dla Linuksa na architekturach alpha, arm, hppa, ia64, i386,
+mips, s390, sparc, sparc64, ppc i x86_64.
 
 %description -l pt_BR.UTF-8
 A diet libc e' uma libc otimizada para criar pequenos binários
 estaticamente linkados para Linux.
 
 %package libs
-Summary:	Dynamic libraries for dietlibc
+Summary:	Shared dietlibc libraries
+Summary(pl.UTF-8):	Biblioteki współdzielone dietlibc
 Group:		Libraries
 
 %description libs
-The diet libc is a libc that is optimized for small size. It can be
-used to create small statically linked binaries for Linux on alpha,
-arm, hppa, ia64, i386, mips, s390, sparc, sparc64, ppc and x86_64.
+This package contains the shared dietlibc libraries.
 
-This package contains the dynamic libraries for dietlibc.
+%description libs -l pl.UTF-8
+Ten pakiet zawiera biblioteki współdzielone dietlibc.
 
 %package devel
 Summary:	Development files for dietlibc
