@@ -1,11 +1,12 @@
 diff -ur dietlibc-0.31/include/stdlib.h dietlibc-0.31-memalign/include/stdlib.h
 --- dietlibc-0.31/include/stdlib.h	2009-03-19 15:39:48.000000000 +0100
 +++ dietlibc-0.31-memalign/include/stdlib.h	2009-03-19 15:39:37.000000000 +0100
-@@ -13,6 +13,8 @@
+@@ -13,6 +13,9 @@
  void *malloc(size_t size)  __THROW __attribute_malloc__;
  void free(void *ptr) __THROW;
  void *realloc(void *ptr, size_t size) __THROW __attribute_malloc__;
 +void *memalign(size_t alignment, size_t size) __THROW __attribute_malloc__;
++int posix_memalign(void **memptr, size_t alignment, size_t size) __THROW __attribute_malloc__;
 +void *valloc(size_t size) __THROW __attribute_malloc__;
  
  char *getenv(const char *name) __THROW __pure;
@@ -38,7 +39,7 @@ diff -ur dietlibc-0.31/lib/alloc.c dietlibc-0.31-memalign/lib/alloc.c
  }
  void __libc_free(void *ptr) __attribute__((alias("_alloc_libc_free")));
  void free(void *ptr) __attribute__((weak,alias("_alloc_libc_free")));
-@@ -268,3 +249,75 @@
+@@ -268,3 +249,83 @@
  }
  void* realloc(void* ptr, size_t size) __attribute__((weak,alias("__libc_realloc")));
  
@@ -108,6 +109,14 @@ diff -ur dietlibc-0.31/lib/alloc.c dietlibc-0.31-memalign/lib/alloc.c
 +DONE:
 +
 +	return result;
++}
++
++int posix_memalign(void **memptr, size_t alignment, size_t size);
++int posix_memalign(void **memptr, size_t alignment, size_t size)
++{
++	if(alignment % sizeof(void*) != 0) return EINVAL;
++	*memptr = memalign(alignment, size);
++	return (*memptr != NULL) ? 0 : ENOMEM;
 +}
 +
 +void * valloc (size_t size);
