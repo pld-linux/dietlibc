@@ -1,0 +1,23 @@
+--- dietlibc-0.32/include/linux/loop.h~	2003-08-19 18:58:18.000000000 +0200
++++ dietlibc-0.32/include/linux/loop.h	2011-05-30 16:50:15.748100072 +0200
+@@ -40,6 +40,7 @@
+ #define LO_CRYPT_IDEA		6
+ #define LO_CRYPT_DUMMY		9
+ #define LO_CRYPT_SKIPJACK	10
++#define LO_CRYPT_CRYPTOAPI	18
+ #define MAX_LO_CRYPT		20
+ 
+ /* IOCTL commands --- we will commandeer 0x4C ('L') */
+@@ -47,6 +48,12 @@
+ #define LOOP_CLR_FD	0x4C01
+ #define LOOP_SET_STATUS	0x4C02
+ #define LOOP_GET_STATUS	0x4C03
++#define LOOP_SET_STATUS	0x4C02
++#define LOOP_GET_STATUS	0x4C03
++#define LOOP_SET_STATUS64	0x4C04
++#define LOOP_GET_STATUS64	0x4C05
++#define LOOP_CHANGE_FD	0x4C06
++#define LOOP_SET_CAPACITY	0x4C07
+ 
+ __END_DECLS
+ 
