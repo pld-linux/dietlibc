@@ -39,6 +39,8 @@ Patch17:	%{name}-devmacros.patch
 Patch18:	%{name}-bloat.patch
 Patch19:	%{name}-notify.patch
 Patch20:	%{name}-loop.patch
+# http://svn.exactcode.de/t2/trunk/package/base/dietlibc/fdopendir.patch, needed by util-linux
+Patch21:	fdopendir.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -127,6 +129,7 @@ statyczne.
 %patch18 -p0
 %patch19 -p1
 %patch20 -p1
+%patch21 -p1
 
 %if "%{cc_version}" < "3.4"
 %{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
