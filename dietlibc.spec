@@ -12,7 +12,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.32
-Release:	15
+Release:	16
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -33,6 +33,7 @@ Patch10:	%{name}-fflush-null.patch
 Patch11:	%{name}-_syscall-no-arch.patch
 
 Patch13:	%{name}-strcoll.patch
+Patch14:	umount-arch.patch
 Patch15:	%{name}-memalign.patch
 Patch16:	%{name}-getsubopt.patch
 Patch17:	%{name}-devmacros.patch
@@ -124,6 +125,7 @@ statyczne.
 %patch11 -p1
 
 %patch13 -p1
+%patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
