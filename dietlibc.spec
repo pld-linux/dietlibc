@@ -130,6 +130,9 @@ statyczne.
 %{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
 %endif
 
+# there is unconditional nice.c already; __nice.c breaks x86_64 build
+%{__rm} lib/__nice.c
+
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing -Wa,--noexecstack"
 CC="%{__cc}"
