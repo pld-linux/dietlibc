@@ -1,7 +1,7 @@
 #
 # Conditional build:
-%bcond_with	ssp	# disable stack-smashing protector 'coz dietlibc will not work with it!
-%bcond_without	dynamic	# dynamic lib support
+%bcond_without	ssp	# disable stack-smashing protector 'coz dietlibc will not work with it!
+%bcond_with	dynamic	# dynamic lib support
 
 %ifnarch %{ix86} %{x8664} arm
 %undefine	with_dynamic
@@ -11,13 +11,13 @@ Summary:	C library optimized for size
 Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.32
-Release:	17
+Version:	0.33
+Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
-Source0:	http://www.kernel.org/pub/linux/libs/dietlibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	0098761c17924c15e21d25acdda4a8b5
+Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
+# Source0-md5:	9d541b9a6623b04ec12e5248b82db7c0
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-platform.patch
@@ -37,12 +37,7 @@ Patch14:	umount-arch.patch
 Patch15:	%{name}-memalign.patch
 Patch16:	%{name}-getsubopt.patch
 Patch17:	%{name}-devmacros.patch
-Patch18:	%{name}-bloat.patch
 Patch19:	%{name}-notify.patch
-Patch20:	%{name}-loop.patch
-# http://svn.exactcode.de/t2/trunk/package/base/dietlibc/fdopendir.patch, needed by util-linux
-Patch21:	fdopendir.patch
-Patch22:	faccessat.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -129,11 +124,7 @@ statyczne.
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
-%patch18 -p0
 %patch19 -p1
-%patch20 -p1
-%patch21 -p1
-%patch22 -p1
 
 %if "%{cc_version}" < "3.4"
 %{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile

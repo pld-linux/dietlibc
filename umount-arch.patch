@@ -103,8 +103,8 @@ index f660930..ca00e4d 100644
 +++ b/ia64/Makefile.add
 @@ -1,2 +1,2 @@
  VPATH:=ia64:syscalls.s:$(VPATH)
--LIBOBJ+=$(OBJDIR)/__time.o $(OBJDIR)/__waitpid.o $(OBJDIR)/__nice.o $(OBJDIR)/__alarm.o
-+LIBOBJ+=$(OBJDIR)/__time.o $(OBJDIR)/__waitpid.o $(OBJDIR)/__nice.o $(OBJDIR)/__alarm.o $(OBJDIR)/umount-wrapper.o
+-LIBOBJ+=$(OBJDIR)/__time.o $(OBJDIR)/__waitpid.o $(OBJDIR)/__nice.o $(OBJDIR)/__alarm.o $(OBJDIR)/__CAS.o
++LIBOBJ+=$(OBJDIR)/__time.o $(OBJDIR)/__waitpid.o $(OBJDIR)/__nice.o $(OBJDIR)/__alarm.o $(OBJDIR)/__CAS.o $(OBJDIR)/umount-wrapper.o
 diff --git a/ia64/umount-wrapper.c b/ia64/umount-wrapper.c
 new file mode 100644
 index 0000000..2ebffd6
