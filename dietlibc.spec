@@ -1,7 +1,7 @@
 #
 # Conditional build:
-%bcond_without	ssp	# disable stack-smashing protector 'coz dietlibc will not work with it!
-%bcond_with	dynamic	# dynamic lib support
+%bcond_without	ssp	# stack-smashing protector
+%bcond_without	dynamic	# dynamic lib support
 
 %ifnarch %{ix86} %{x8664} arm
 %undefine	with_dynamic
@@ -31,7 +31,7 @@ Patch8:		%{name}-nostrip.patch
 Patch9:		%{name}-stackgap-instead-of-ssp.patch
 Patch10:	%{name}-fflush-null.patch
 Patch11:	%{name}-_syscall-no-arch.patch
-
+Patch12:	%{name}-dynamic.patch
 Patch13:	%{name}-strcoll.patch
 Patch14:	umount-arch.patch
 Patch15:	%{name}-memalign.patch
@@ -118,7 +118,7 @@ statyczne.
 %{!?with_ssp:%patch9 -p1}
 %patch10 -p1
 %patch11 -p1
-
+%patch12 -p1
 %patch13 -p1
 %patch14 -p1
 %patch15 -p1
