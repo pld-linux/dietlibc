@@ -21,23 +21,18 @@ Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-platform.patch
-# workaround for http://gcc.gnu.org/PR26374
-Patch3:		%{name}-gcc4.patch
 Patch4:		%{name}-guard.patch
 Patch5:		%{name}-arm.patch
 Patch6:		%{name}-diet-m.patch
-Patch7:		%{name}-nice.patch
 Patch8:		%{name}-nostrip.patch
 Patch9:		%{name}-stackgap-instead-of-ssp.patch
-Patch10:	%{name}-fflush-null.patch
-Patch11:	%{name}-_syscall-no-arch.patch
-Patch12:	%{name}-dynamic.patch
-Patch13:	%{name}-strcoll.patch
 Patch14:	umount-arch.patch
 Patch15:	%{name}-memalign.patch
 Patch16:	%{name}-getsubopt.patch
 Patch17:	%{name}-devmacros.patch
 Patch19:	%{name}-notify.patch
+Patch20:	x32-fixes.patch
+Patch100:	git.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -106,32 +101,25 @@ statyczne.
 %prep
 %setup -q
 %undos arm/md5asm.S
+%patch100 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
-%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
-%patch7 -p1
 %patch8 -p1
 %{!?with_ssp:%patch9 -p1}
-%patch10 -p1
-%patch11 -p1
-%patch12 -p1
-%patch13 -p1
 %patch14 -p1
 %patch15 -p1
 %patch16 -p1
 %patch17 -p1
 %patch19 -p1
+%patch20 -p1
 
 %if "%{cc_version}" < "3.4"
 %{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
 %endif
-
-# there is unconditional nice.c already; __nice.c breaks x86_64 build
-%{__rm} lib/__nice.c
 
 %build
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing -Wa,--noexecstack"
@@ -140,12 +128,18 @@ CC="%{__cc}"
 sparc32 \
 %endif
 %{__make} -j1 all \
+%ifarch x32
+	MYARCH=x32 \
+%endif
 	prefix=%{dietprefix} \
 	CC="${CC#*ccache }"
 
 %if %{with dynamic}
 # 'dyn' target is not SMP safe
 %{__make} -j1 dyn \
+%ifarch x32
+	MYARCH=x32 \
+%endif
 	prefix=%{dietprefix} \
 	CC="${CC}"
 %endif
@@ -158,6 +152,9 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_bindir},%{_mandir}/man1}
 sparc32 \
 %endif
 %{__make} install \
+%ifarch x32
+	MYARCH=x32 \
+%endif
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{dietprefix}
 

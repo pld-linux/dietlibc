@@ -1,0 +1,68 @@
+--- dietlibc-0.33/Makefile~	2015-01-01 13:33:23.000000000 +0000
++++ dietlibc-0.33/Makefile	2015-01-01 14:02:17.398044560 +0000
+@@ -10,7 +10,7 @@
+ 
+ EXTRACFLAGS=
+ 
+-MYARCH:=$(shell uname -m | sed -e 's/i[4-9]86/i386/' -e 's/armv[3-7]t\?[eh]\?j\?[lb]/arm/')
++MYARCH?=$(shell uname -m | sed -e 's/i[4-9]86/i386/' -e 's/armv[3-7]t\?[eh]\?j\?[lb]/arm/')
+ 
+ # This extra-ugly cruft is here so make will not run uname and sed each
+ # time it looks at $(OBJDIR).  This alone sped up running make when
+@@ -65,10 +65,14 @@
+ ifeq ($(MYARCH),armeb)
+ ARCH=arm
+ else
++ifeq ($(MYARCH),x32)
++ARCH=x32
++else
+ $(error unknown architecture, please fix Makefile)
+ endif
+ endif
+ endif
++endif
+ endif
+ endif
+ endif
+--- dietlibc-0.33/x86_64/start.S	2012-11-02 11:17:28.000000000 +0000
++++ dietlibc/x86_64/start.S	2015-01-01 12:14:43.541605560 +0000
+@@ -1,5 +1,7 @@
+ #include "dietfeatures.h"
+ 
++#define SYS_exit 0x3c
++
+ .text
+ .global _start
+ _start:
+--- dietlibc-0.33/diet.c.orig	2015-01-01 14:22:18.024668874 +0000
++++ dietlibc-0.33/diet.c	2015-01-01 14:42:07.241293590 +0000
+@@ -140,8 +143,12 @@
+       if (tmp3<tmp2) tmp2=tmp3;
+       if (tmp2-cc>90) error("platform name too long!\n");
+       shortplatform=platform+len;
++#if defined(__x86_64__) && defined (__ILP32__)
++      strcat(shortplatform,"x32");
++#else
+       memmove(shortplatform,argv[1],(size_t)(tmp2-cc));
+       platform[tmp2-cc+len]=0;
++#endif
+       if (shortplatform[0]=='i' && shortplatform[2]=='8' && shortplatform[3]=='6') shortplatform[1]='3';
+       else if (!strncmp(shortplatform, "pentium4", 8)) strcpy(shortplatform, "i386");
+       else if (!strncmp(shortplatform, "pentium3", 8)) strcpy(shortplatform, "i386");
+@@ -196,8 +211,12 @@
+       shortplatform="parisc";
+ #endif
+ #ifdef __x86_64__
++#ifdef __ILP32__
++      shortplatform=(m==32?"i386":(m==64?"x86_64":"x32"));
++#else
+       shortplatform=(m==32?"i386":(m==33?"x32":"x86_64"));
+ #endif
++#endif
+ #ifdef __ia64__
+       shortplatform="ia64";
+ #endif
+--- /dev/null	2014-12-27 02:30:11.755493543 +0000
++++ dietlibc-0.33/x32/time.S	2015-01-01 14:51:28.000000000 +0000
+@@ -0,0 +1 @@
++/* avoid empty source file */
