@@ -21,17 +21,17 @@ Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-platform.patch
-Patch4:		%{name}-guard.patch
-Patch5:		%{name}-arm.patch
-Patch6:		%{name}-diet-m.patch
-Patch8:		%{name}-nostrip.patch
-Patch9:		%{name}-stackgap-instead-of-ssp.patch
-Patch14:	umount-arch.patch
-Patch15:	%{name}-memalign.patch
-Patch16:	%{name}-getsubopt.patch
-Patch17:	%{name}-devmacros.patch
-Patch19:	%{name}-notify.patch
-Patch20:	x32-fixes.patch
+Patch3:		%{name}-guard.patch
+Patch4:		%{name}-arm.patch
+Patch5:		%{name}-diet-m.patch
+Patch6:		%{name}-nostrip.patch
+Patch7:		%{name}-stackgap-instead-of-ssp.patch
+Patch8:		umount-arch.patch
+Patch9:		%{name}-memalign.patch
+Patch10:	%{name}-getsubopt.patch
+Patch11:	%{name}-devmacros.patch
+Patch12:	%{name}-notify.patch
+Patch13:	x32-fixes.patch
 Patch100:	git.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -105,17 +105,17 @@ statyczne.
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 %patch4 -p1
 %patch5 -p1
 %patch6 -p1
+%{!?with_ssp:%patch7 -p1}
 %patch8 -p1
-%{!?with_ssp:%patch9 -p1}
-%patch14 -p1
-%patch15 -p1
-%patch16 -p1
-%patch17 -p1
-%patch19 -p1
-%patch20 -p1
+%patch9 -p1
+%patch10 -p1
+%patch11 -p1
+%patch12 -p1
+%patch13 -p1
 
 %if "%{cc_version}" < "3.4"
 %{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
