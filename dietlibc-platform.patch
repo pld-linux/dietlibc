@@ -11,6 +11,6 @@ diff -uNrp dietlibc-0.29.orig/diet.c dietlibc-0.29/diet.c
 +      else if (!strncmp(shortplatform, "amd64", 5)) strcpy(shortplatform, "x86_64");
 +      else if (!strncmp(shortplatform, "armv", 4)) strcpy(shortplatform, "arm");
 +      else if (!strncmp(shortplatform, "sparcv", 6)) strcpy(shortplatform, "sparc");
-     } else {
- #ifdef __sparc__
- #ifdef __arch64__
+       else if (strcmp(shortplatform, "powerpc") == 0)
+         strcpy(shortplatform, "ppc");
+       else if (strcmp(shortplatform, "powerpc64") == 0)
