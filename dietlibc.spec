@@ -1,7 +1,7 @@
 #
 # Conditional build:
 %bcond_without	ssp	# stack-smashing protector
-%bcond_without	dynamic	# dynamic lib support
+%bcond_with	dynamic	# dynamic lib support
 
 %ifnarch %{ix86} %{x8664} arm
 %undefine	with_dynamic
@@ -12,7 +12,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.33
-Release:	3
+Release:	4
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
