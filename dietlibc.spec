@@ -1,4 +1,8 @@
-#
+# NOTE: recent PLD kernels no longer support vsyscalls and dietlibc
+# uses vsyscall heavily, so your apps can stop working segfaulting with:
+# "vsyscall attempted with vsyscall=none ...."
+# in dmesg.
+
 # Conditional build:
 %bcond_without	ssp	# stack-smashing protector
 %bcond_with	dynamic	# dynamic lib support
