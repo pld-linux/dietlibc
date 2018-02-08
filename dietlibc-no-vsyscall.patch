@@ -1,0 +1,14 @@
+--- dietlibc-0.33/dietfeatures.h~	2018-02-08 18:18:17.000000000 +0100
++++ dietlibc-0.33/dietfeatures.h	2018-02-08 18:21:02.388516769 +0100
+@@ -41,11 +41,6 @@
+  * string */
+ /* #define WANT_FULL_POSIX_COMPAT */
+ 
+-/* on i386, Linux has an alternate syscall method since 2002/12/16 */
+-/* on my Athlon XP, it is twice as fast, but it's only in kernel 2.5 */
+-/* 20040118: enabling this breaks User Mode Linux!  It's their fault. */
+-#define WANT_SYSENTER
+-
+ #define WANT_LINKER_WARNINGS
+ 
+ /* you need to define this if you want to run your programs with large

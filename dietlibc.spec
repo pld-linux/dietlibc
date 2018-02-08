@@ -1,8 +1,3 @@
-# NOTE: recent PLD kernels no longer support vsyscalls and dietlibc
-# uses vsyscall heavily, so your apps can stop working segfaulting with:
-# "vsyscall attempted with vsyscall=none ...."
-# in dmesg.
-
 # Conditional build:
 %bcond_without	ssp	# stack-smashing protector
 %bcond_with	dynamic	# dynamic lib support
@@ -16,7 +11,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.33
-Release:	4
+Release:	5
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -36,6 +31,7 @@ Patch10:	%{name}-getsubopt.patch
 Patch11:	%{name}-devmacros.patch
 Patch12:	%{name}-notify.patch
 Patch13:	x32-fixes.patch
+Patch14:	%{name}-no-vsyscall.patch
 Patch100:	git.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRequires:	rpmbuild(macros) >= 1.566
@@ -120,6 +116,7 @@ statyczne.
 %patch11 -p1
 %patch12 -p1
 %patch13 -p1
+%patch14 -p1
 
 %if "%{cc_version}" < "3.4"
 %{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
