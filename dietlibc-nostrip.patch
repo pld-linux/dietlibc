@@ -1,49 +1,48 @@
---- dietlibc/Makefile.orig	2006-06-21 21:18:13.000000000 +0200
-+++ dietlibc/Makefile	2006-06-21 21:35:15.252354000 +0200
-@@ -161,7 +161,6 @@
+--- dietlibc-0.34/Makefile.orig	2020-04-22 01:02:35.965574117 +0200
++++ dietlibc-0.34/Makefile	2020-04-22 01:04:39.085029868 +0200
+@@ -184,7 +184,6 @@
  
- $(OBJDIR)/%.o: %.c
+ $(OBJDIR)/%.o: %.c | $(OBJDIR)
  	tcc -I. -Iinclude -c $< -o $@
 -	-$(STRIP) -x -R .comment -R .note $@
  else
- $(OBJDIR)/pstart.o: start.S
- 	$(CCC) $(INC) $(CFLAGS) -DPROFILING -c $< -o $@
-@@ -171,12 +170,10 @@
+ $(OBJDIR)/pstart.o: start.S | $(OBJDIR)
+ 	$(CCC) $(INC) $(CCFLAGS) -DPROFILING -c $< $(ASM_CFLAGS) -o $@
+@@ -194,11 +193,9 @@
  
  $(OBJDIR)/pthread_%.o: libpthread/pthread_%.c | $(OBJDIR)
- 	$(CCC) $(INC) $(CFLAGS) $(EXTRACFLAGS) -c $< -o $@
+ 	$(CCC) $(INC) $(CCFLAGS) $(EXTRACFLAGS) -c $< -o $@
 -	-$(STRIP) -x -R .comment -R .note $@
- $(OBJDIR)/stack_smash_handler2.o:	EXTRACFLAGS:=-fno-omit-frame-pointer
  
  $(OBJDIR)/%.o: %.c | $(OBJDIR)
- 	$(CCC) $(INC) $(CFLAGS) $(EXTRACFLAGS) -c $< -o $@ -D__dietlibc__
+ 	$(CCC) $(INC) $(CCFLAGS) $(EXTRACFLAGS) -c $< -o $@ -D__dietlibc__
 -	-$(STRIP) -x -R .comment -R .note $@
+ endif
  
- $(addprefix $(OBJDIR)/,$(NO_STACK_PROTECTOR)) \
- $(addprefix $(PICODIR)/,$(NO_STACKPROTECTOR)):	EXTRACFLAGS+=-fno-stack-protector
-@@ -246,18 +243,15 @@
+ 
+@@ -282,18 +279,15 @@
  
  $(PICODIR)/pthread_%.o: libpthread/pthread_%.c | $(PICODIR)
- 	$(CCC) $(INC) $(CFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB -c $< -o $@
+ 	$(CCC) $(INC) $(CCFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB -c $< -o $@
 -	$(STRIP) -x -R .comment -R .note $@
  
  $(PICODIR)/%.o: %.c | $(PICODIR)
- 	$(CCC) $(INC) $(CFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB -c $< -o $@
+ 	$(CCC) $(INC) $(CCFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB -c $< -o $@
 -	$(STRIP) -x -R .comment -R .note $@
  
  $(PICODIR)/dstart.o: start.S | $(PICODIR)
- 	$(CCC) $(INC) $(CFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB $(ASM_CFLAGS) -c $< -o $@
+ 	$(CCC) $(INC) $(CCFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB $(ASM_CFLAGS) -c $< -o $@
  
  $(PICODIR)/dyn_so_start.o: dyn_start.c | $(PICODIR)
- 	$(CCC) $(INC) $(CFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB -D__DYN_LIB_SHARED -c $< -o $@
+ 	$(CCC) $(INC) $(CCFLAGS) $(EXTRACFLAGS) -fPIC -D__DYN_LIB -D__DYN_LIB_SHARED -c $< -o $@
 -	$(STRIP) -x -R .comment -R .note $@
  
  DYN_LIBC_PIC = $(LIBOBJ) $(LIBSTDIOOBJ) $(LIBUGLYOBJ) \
  $(LIBCRUFTOBJ) $(LIBCRYPTOBJ) $(LIBSHELLOBJ) $(LIBREGEXOBJ)
-@@ -306,19 +300,15 @@
+@@ -345,19 +339,15 @@
  
  $(OBJDIR)/diet: $(OBJDIR)/start.o $(OBJDIR)/dyn_start.o diet.c $(OBJDIR)/dietlibc.a $(OBJDIR)/dyn_stop.o
- 	$(CCC) -isystem include $(CFLAGS) -nostdlib -o $@ $^ -DDIETHOME=\"$(HOME)\" -DVERSION=\"$(VERSION)\" -lgcc
+ 	$(CCC) -isystem include $(CFLAGS) -nostdlib -o $@ $^ -DDIETHOME=\"$(DIETHOME)\" -DVERSION=\"$(VERSION)\" -lgcc
 -	$(STRIP) -R .comment -R .note $@
  
  $(OBJDIR)/diet-i: $(OBJDIR)/start.o $(OBJDIR)/dyn_start.o diet.c $(OBJDIR)/dietlibc.a $(OBJDIR)/dyn_stop.o
@@ -51,7 +50,7 @@
 -	$(STRIP) -R .comment -R .note $@
  
  $(PICODIR)/diet-dyn: $(PICODIR)/start.o $(PICODIR)/dyn_start.o diet.c
- 	$(LD_UNSET) $(CCC) -isystem include $(CFLAGS) -fPIC -nostdlib -o $@ $^ -DDIETHOME=\"$(HOME)\" -D__DYN_LIB -DVERSION=\"$(VERSION)\" -L$(PICODIR) -lc -lgcc $(PICODIR)/dyn_stop.o -Wl,-dynamic-linker=$(HOME)/$(PICODIR)/libdl.so
+ 	$(LD_UNSET) $(CCC) -isystem include $(CFLAGS) -fPIC -nostdlib -o $@ $^ -DDIETHOME=\"$(DIETHOME)\" -D__DYN_LIB -DVERSION=\"$(VERSION)\" -L$(PICODIR) -lc -lgcc $(PICODIR)/dyn_stop.o -Wl,-dynamic-linker=$(DIETHOME)/$(PICODIR)/libdl.so
 -	$(STRIP) -R .command -R .note $@
  
  $(PICODIR)/diet-dyn-i: $(PICODIR)/start.o $(PICODIR)/dyn_start.o diet.c

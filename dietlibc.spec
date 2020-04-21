@@ -10,13 +10,13 @@ Summary:	C library optimized for size
 Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.33
-Release:	5
+Version:	0.34
+Release:	0.1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
-Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.bz2
-# Source0-md5:	9d541b9a6623b04ec12e5248b82db7c0
+Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.xz
+# Source0-md5:	4f04a6f642548cc5be716a6e0de6b631
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-platform.patch
@@ -25,14 +25,12 @@ Patch4:		%{name}-arm.patch
 Patch5:		%{name}-diet-m.patch
 Patch6:		%{name}-nostrip.patch
 Patch7:		%{name}-stackgap-instead-of-ssp.patch
-Patch8:		umount-arch.patch
 Patch9:		%{name}-memalign.patch
 Patch10:	%{name}-getsubopt.patch
 Patch11:	%{name}-devmacros.patch
 Patch12:	%{name}-notify.patch
 Patch13:	x32-fixes.patch
 Patch14:	%{name}-no-vsyscall.patch
-Patch100:	git.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRequires:	rpmbuild(macros) >= 1.566
 BuildRequires:	sed >= 4.0
@@ -101,7 +99,6 @@ statyczne.
 %prep
 %setup -q
 %undos arm/md5asm.S
-%patch100 -p1
 %patch0 -p1
 %patch1 -p1
 %patch2 -p1
@@ -110,7 +107,6 @@ statyczne.
 %patch5 -p1
 %patch6 -p1
 %{!?with_ssp:%patch7 -p1}
-%patch8 -p1
 %patch9 -p1
 %patch10 -p1
 %patch11 -p1
