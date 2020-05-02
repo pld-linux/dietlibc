@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.34
-Release:	0.1
+Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries

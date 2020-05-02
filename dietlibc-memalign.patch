@@ -117,5 +117,5 @@ diff -ur dietlibc-0.31/lib/alloc.c dietlibc-0.31-memalign/lib/alloc.c
 +}
 +
 +void * valloc (size_t size) {
-+	return memalign(__DIET_PAGE_SIZE, size);
++	return memalign(PAGE_SIZE, size);
 +}
