@@ -125,18 +125,14 @@ CC="%{__cc}"
 sparc32 \
 %endif
 %{__make} -j1 all \
-%ifarch x32
-	MYARCH=x32 \
-%endif
+	MYARCH=%{libarch} \
 	prefix=%{dietprefix} \
 	CC="${CC#*ccache }"
 
 %if %{with dynamic}
 # 'dyn' target is not SMP safe
 %{__make} -j1 dyn \
-%ifarch x32
-	MYARCH=x32 \
-%endif
+	MYARCH=%{libarch} \
 	prefix=%{dietprefix} \
 	CC="${CC}"
 %endif
@@ -149,9 +145,7 @@ install -d $RPM_BUILD_ROOT{%{_sysconfdir},%{_bindir},%{_mandir}/man1}
 sparc32 \
 %endif
 %{__make} install \
-%ifarch x32
-	MYARCH=x32 \
-%endif
+	MYARCH=%{libarch} \
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{dietprefix}
 
