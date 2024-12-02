@@ -1,23 +1,7 @@
-diff -ur dietlibc-0.30.org/findcflags.sh dietlibc-0.30/findcflags.sh
---- dietlibc-0.30.org/findcflags.sh	2005-04-23 13:47:18.000000000 +0200
-+++ dietlibc-0.30/findcflags.sh	2007-02-06 22:24:17.449538250 +0100
-@@ -1,8 +1,8 @@
- #!/bin/sh
- version=`${1:-gcc} -v 2>&1 |sed -n '/gcc version/ {s/gcc version //;p;}'`
- case $version in
--  2.9*) echo -march=i386 -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
--  3.0*) echo -march=i386 -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
--  [34]*) echo -Os -fomit-frame-pointer -falign-functions=1 -falign-jumps=1 -falign-loops=1 -mpreferred-stack-boundary=4;;
--  *) echo -O2 -pipe -fomit-frame-pointer ;;
-+  2.9*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
-+  3.0*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
-+  [34]*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -falign-functions=1 -falign-jumps=1 -falign-loops=1 -mpreferred-stack-boundary=4;;
-+  *) echo -O2 ${OPTFLAGS} -pipe -fomit-frame-pointer ;;
- esac
-diff -ur dietlibc-0.30.org/Makefile dietlibc-0.30/Makefile
---- dietlibc-0.30.org/Makefile	2006-06-18 20:32:28.000000000 +0200
-+++ dietlibc-0.30/Makefile	2007-02-06 22:25:12.368970500 +0100
-@@ -100,7 +100,7 @@
+diff -urNp -x '*.orig' dietlibc-0.34.org/Makefile dietlibc-0.34/Makefile
+--- dietlibc-0.34.org/Makefile	2018-02-10 19:27:23.000000000 +0100
++++ dietlibc-0.34/Makefile	2024-12-03 00:46:28.132368197 +0100
+@@ -116,7 +116,7 @@ all: $(WHAT)
  
  profiling: $(OBJDIR)/libgmon.a $(OBJDIR)/pstart.o
  
@@ -26,7 +10,7 @@ diff -ur dietlibc-0.30.org/Makefile dietlibc-0.30/Makefile
  CFLAGS=$(DEFAULTCFLAGS)
  CROSS=
  
-@@ -132,14 +132,6 @@
+@@ -152,14 +152,6 @@ include $(ARCH)/Makefile.add
  
  LIBMATHOBJ=$(patsubst %,$(OBJDIR)/%,$(LIBMATH))
  
@@ -40,4 +24,20 @@ diff -ur dietlibc-0.30.org/Makefile dietlibc-0.30/Makefile
 -endif
  CFLAGS += -W -Wall -Wextra -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wno-switch -Wno-unused -Wredundant-decls -Wshadow
  
- PWD=$(shell pwd)
+ ASM_CFLAGS = -Wa,--noexecstack
+diff -urNp -x '*.orig' dietlibc-0.34.org/findcflags.sh dietlibc-0.34/findcflags.sh
+--- dietlibc-0.34.org/findcflags.sh	2014-04-19 17:07:32.000000000 +0200
++++ dietlibc-0.34/findcflags.sh	2024-12-03 00:46:28.132368197 +0100
+@@ -1,8 +1,8 @@
+ #!/bin/sh
+ version=`${1:-gcc} -v 2>&1 |sed -n '/gcc version/ {s/gcc version //;p;}'`
+ case $version in
+-  2.9*) echo -march=i386 -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
+-  3.0*) echo -march=i386 -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
+-  [34]*) echo -Os -fomit-frame-pointer -falign-functions=1 -falign-jumps=1 -falign-loops=1 -mpreferred-stack-boundary=4;;
+-  *) echo -O2 -pipe -fomit-frame-pointer ;;
++  2.9*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
++  3.0*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -malign-functions=1 -malign-jumps=1 -malign-loops=1 -mpreferred-stack-boundary=2 ;;
++  [34]*) echo ${OPTFLAGS} -Os -fomit-frame-pointer -falign-functions=1 -falign-jumps=1 -falign-loops=1 -mpreferred-stack-boundary=4;;
++  *) echo -O2 ${OPTFLAGS} -pipe -fomit-frame-pointer ;;
+ esac

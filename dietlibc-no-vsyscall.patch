@@ -1,7 +1,8 @@
---- dietlibc-0.33/dietfeatures.h~	2018-02-08 18:18:17.000000000 +0100
-+++ dietlibc-0.33/dietfeatures.h	2018-02-08 18:21:02.388516769 +0100
-@@ -41,11 +41,6 @@
-  * string */
+diff -urNp -x '*.orig' dietlibc-0.34.org/dietfeatures.h dietlibc-0.34/dietfeatures.h
+--- dietlibc-0.34.org/dietfeatures.h	2018-02-01 03:03:38.000000000 +0100
++++ dietlibc-0.34/dietfeatures.h	2024-12-03 00:47:08.669003636 +0100
+@@ -50,11 +50,6 @@
+  * zero-terminate the destination string */
  /* #define WANT_FULL_POSIX_COMPAT */
  
 -/* on i386, Linux has an alternate syscall method since 2002/12/16 */
