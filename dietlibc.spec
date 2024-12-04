@@ -39,6 +39,8 @@ BuildRequires:	sparc32
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
+%define		_debugsource_packages	0
+
 %define		dietprefix	%{_prefix}/lib/dietlibc
 # for some reason known only to rpm there must be "\\|" not "\|" here
 %define		libarch		%(echo %{_target_cpu} | sed -e 's/i.86\\|pentium.\\|athlon/i386/;s/amd64/x86_64/;s/armv.*/arm/;s/sparcv.*/sparc/')
