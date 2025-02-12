@@ -1,0 +1,37 @@
+--- dietlibc-0.34/diet.c.orig	2025-02-12 23:57:45.183093416 +0100
++++ dietlibc-0.34/diet.c	2025-02-13 00:19:34.490119122 +0100
+@@ -139,18 +139,20 @@
+     char *tmp2,*tmp3;
+     if (tmp<cc) goto donttouch;
+     if (!strstr(cc,"cc") && !strstr(cc,"clang")) goto donttouch;
+-    if ((tmp2=strstr(cc,"linux-"))) {	/* cross compiling? */
++    char *basecc = strrchr(cc,'/');
++    basecc = basecc ? basecc + 1 : cc;
++    if ((tmp2=strstr(basecc,"linux-"))) {	/* cross compiling? */
+       int len=strlen(platform);
+       --tmp2;
+-      tmp3=strchr(cc,'-');
++      tmp3=strchr(basecc,'-');
+       if (tmp3<tmp2) tmp2=tmp3;
+-      if (tmp2-cc>90) error("platform name too long!\n");
++      if (tmp2-basecc>90) error("platform name too long!\n");
+       shortplatform=platform+len;
+ #if defined(__x86_64__) && defined (__ILP32__)
+       strcat(shortplatform,"x32");
+ #else
+-      memmove(shortplatform,argv[1],(size_t)(tmp2-cc));
+-      platform[tmp2-cc+len]=0;
++      memmove(shortplatform,basecc,(size_t)(tmp2-basecc));
++      platform[tmp2-basecc+len]=0;
+ #endif
+       if (shortplatform[0]=='i' && shortplatform[2]=='8' && shortplatform[3]=='6') shortplatform[1]='3';
+       else if (!strncmp(shortplatform, "pentium4", 8)) strcpy(shortplatform, "i386");
+@@ -175,7 +177,7 @@
+         strcpy(shortplatform, "parisc");
+       if (!strcmp(shortplatform, "mips64el"))
+         strcpy(shortplatform, "mips64");
+-      if (!strncmp(cc, "x86_64-linux-gnux32-", 20) || !strncmp(cc, "x86_64-pc-linux-gnux32-", 23))
++      if (!strncmp(basecc, "x86_64-linux-gnux32-", 20) || !strncmp(basecc, "x86_64-pc-linux-gnux32-", 23))
+         strcpy(shortplatform, "x32");
+     } else {
+ #ifdef __sparc__

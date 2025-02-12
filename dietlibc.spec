@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.34
-Release:	1
+Release:	2
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -31,6 +31,7 @@ Patch11:	%{name}-devmacros.patch
 Patch12:	%{name}-notify.patch
 Patch13:	x32-fixes.patch
 Patch14:	%{name}-no-vsyscall.patch
+Patch15:	absolute-cc-path.patch
 URL:		http://www.fefe.de/dietlibc/
 BuildRequires:	rpmbuild(macros) >= 2.005
 BuildRequires:	sed >= 4.0
@@ -115,6 +116,7 @@ statyczne.
 %patch -P12 -p1
 %patch -P13 -p1
 %patch -P14 -p1
+%patch -P15 -p1
 
 %if "%{cc_version}" < "3.4"
 %{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
