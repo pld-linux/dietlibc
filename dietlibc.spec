@@ -32,7 +32,7 @@ Patch12:	%{name}-notify.patch
 Patch13:	x32-fixes.patch
 Patch14:	%{name}-no-vsyscall.patch
 URL:		http://www.fefe.de/dietlibc/
-BuildRequires:	rpmbuild(macros) >= 1.566
+BuildRequires:	rpmbuild(macros) >= 2.005
 BuildRequires:	sed >= 4.0
 %ifarch sparc sparcv9
 BuildRequires:	sparc32
