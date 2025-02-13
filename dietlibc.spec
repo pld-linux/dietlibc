@@ -11,7 +11,7 @@ Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
 Version:	0.34
-Release:	2
+Release:	3
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
@@ -40,7 +40,7 @@ BuildRequires:	sparc32
 %endif
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
-%define		_debugsource_packages	0
+%undefine	_debugsource_packages
 
 %define		dietprefix	%{_prefix}/lib/dietlibc
 # for some reason known only to rpm there must be "\\|" not "\|" here
