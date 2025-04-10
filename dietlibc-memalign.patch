@@ -1,16 +1,22 @@
-diff -urNp -x '*.orig' dietlibc-0.34.org/include/stdlib.h dietlibc-0.34/include/stdlib.h
---- dietlibc-0.34.org/include/stdlib.h	2017-05-02 23:11:36.000000000 +0200
-+++ dietlibc-0.34/include/stdlib.h	2024-12-03 00:46:46.340653625 +0100
-@@ -13,6 +13,9 @@ void *calloc(size_t nmemb, size_t size)
- void *malloc(size_t size)  __THROW __attribute_malloc__;
- void free(void *ptr) __THROW;
+--- dietlibc-0.35/include/stdlib.h.orig	2024-10-02 18:52:52.000000000 +0200
++++ dietlibc-0.35/include/stdlib.h	2025-04-10 20:02:57.813146563 +0200
+@@ -22,6 +22,16 @@ __attribute__((__warn_unused_result__))
+ __attribute_alloc__(2)
  void *realloc(void *ptr, size_t size) __THROW __attribute_malloc__;
-+void *memalign(size_t alignment, size_t size) __THROW __attribute_malloc__;
-+int posix_memalign(void **memptr, size_t alignment, size_t size) __THROW __attribute_malloc__;
-+void *valloc(size_t size) __THROW __attribute_malloc__;
  
++__attribute__((__warn_unused_result__))
++__attribute_alloc__(2)
++void *memalign(size_t alignment, size_t size) __THROW __attribute_malloc__;
++
++int posix_memalign(void **memptr, size_t alignment, size_t size) __THROW __attribute_malloc__;
++
++__attribute__((__warn_unused_result__))
++__attribute_alloc__(1)
++void *valloc(size_t size) __THROW __attribute_malloc__;
++
  /* useful OpenBSD extension: */
- void* reallocarray(void* ptr, size_t nmemb, size_t size) __THROW __attribute_malloc__ __attribute_alloc2__(2,3);
+ __attribute__((__warn_unused_result__))
+ __attribute_alloc2__(2,3)
 diff -urNp -x '*.orig' dietlibc-0.34.org/lib/alloc.c dietlibc-0.34/lib/alloc.c
 --- dietlibc-0.34.org/lib/alloc.c	2016-02-05 21:17:39.000000000 +0100
 +++ dietlibc-0.34/lib/alloc.c	2024-12-03 00:46:46.340653625 +0100

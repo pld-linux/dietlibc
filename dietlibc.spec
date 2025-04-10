@@ -1,8 +1,9 @@
+#
 # Conditional build:
 %bcond_without	ssp	# stack-smashing protector
 %bcond_with	dynamic	# dynamic lib support
 
-%ifnarch %{ix86} %{x8664} arm
+%ifnarch %{ix86} %{x8664} %{arm}
 %undefine	with_dynamic
 %endif
 
@@ -10,20 +11,20 @@ Summary:	C library optimized for size
 Summary(pl.UTF-8):	Biblioteka standardowa C zoptymalizowana na rozmiar
 Summary(pt_BR.UTF-8):	libc pequena otimizada para tamanho
 Name:		dietlibc
-Version:	0.34
-Release:	3
+Version:	0.35
+Release:	1
 Epoch:		2
 License:	GPL v2
 Group:		Development/Libraries
 Source0:	http://www.fefe.de/dietlibc/%{name}-%{version}.tar.xz
-# Source0-md5:	4f04a6f642548cc5be716a6e0de6b631
+# Source0-md5:	100e0321b49fdfd2de8c63bc1e30aad8
 Patch0:		%{name}-ppc.patch
 Patch1:		%{name}-opt.patch
 Patch2:		%{name}-platform.patch
 Patch3:		%{name}-guard.patch
 Patch4:		%{name}-arm.patch
 Patch5:		%{name}-diet-m.patch
-Patch6:		%{name}-nostrip.patch
+Patch6:		%{name}-syscalls.patch
 Patch7:		%{name}-stackgap-instead-of-ssp.patch
 Patch9:		%{name}-memalign.patch
 Patch10:	%{name}-getsubopt.patch
@@ -33,6 +34,7 @@ Patch13:	x32-fixes.patch
 Patch14:	%{name}-no-vsyscall.patch
 Patch15:	absolute-cc-path.patch
 URL:		http://www.fefe.de/dietlibc/
+BuildRequires:	gcc >= 6:3.4
 BuildRequires:	rpmbuild(macros) >= 2.005
 BuildRequires:	sed >= 4.0
 %ifarch sparc sparcv9
@@ -118,11 +120,10 @@ statyczne.
 %patch -P14 -p1
 %patch -P15 -p1
 
-%if "%{cc_version}" < "3.4"
-%{__sed} -i -e '/CFLAGS/ s/-Wextra//' Makefile
-%endif
-
 %build
+# needed for build, but can't be compiled before lib
+%{__cc} %{rpmldflags} %{rpmcflags} %{rpmcppflags} -o json json.c
+
 export OPTFLAGS="%{rpmcflags}%{?with_ssp: -fno-stack-protector} -fno-strict-aliasing -Wa,--noexecstack"
 CC="%{__cc}"
 %ifarch sparc sparcv9
@@ -131,14 +132,16 @@ sparc32 \
 %{__make} -j1 all \
 	MYARCH=%{libarch} \
 	prefix=%{dietprefix} \
-	CC="${CC#*ccache }"
+	CC="${CC#*ccache }" \
+	STRIP=:
 
 %if %{with dynamic}
 # 'dyn' target is not SMP safe
 %{__make} -j1 dyn \
 	MYARCH=%{libarch} \
 	prefix=%{dietprefix} \
-	CC="${CC}"
+	CC="${CC}" \
+	STRIP=:
 %endif
 
 %install
@@ -153,11 +156,10 @@ sparc32 \
 	DESTDIR=$RPM_BUILD_ROOT \
 	prefix=%{dietprefix}
 
-mv $RPM_BUILD_ROOT%{dietprefix}/bin/* $RPM_BUILD_ROOT%{_bindir}
-mv $RPM_BUILD_ROOT%{dietprefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
-rm -rf $RPM_BUILD_ROOT%{dietprefix}/{bin,man}
-rm -f $RPM_BUILD_ROOT%{_bindir}/diet-dyn
-rm -f $RPM_BUILD_ROOT%{_bindir}/dnsd
+%{__mv} $RPM_BUILD_ROOT%{dietprefix}/bin/* $RPM_BUILD_ROOT%{_bindir}
+%{__mv} $RPM_BUILD_ROOT%{dietprefix}/man/man1/* $RPM_BUILD_ROOT%{_mandir}/man1
+%{__rm} -r $RPM_BUILD_ROOT%{dietprefix}/{bin,man}
+%{__rm} $RPM_BUILD_ROOT%{_bindir}/dnsd
 
 cat > $RPM_BUILD_ROOT%{_bindir}/%{_target_cpu}-dietlibc-gcc <<'EOF'
 #!/bin/sh

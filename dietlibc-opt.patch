@@ -1,16 +1,15 @@
-diff -urNp -x '*.orig' dietlibc-0.34.org/Makefile dietlibc-0.34/Makefile
---- dietlibc-0.34.org/Makefile	2018-02-10 19:27:23.000000000 +0100
-+++ dietlibc-0.34/Makefile	2024-12-03 00:46:28.132368197 +0100
-@@ -116,7 +116,7 @@ all: $(WHAT)
+--- dietlibc-0.35/Makefile.orig	2024-10-31 14:30:46.000000000 +0100
++++ dietlibc-0.35/Makefile	2025-04-10 19:58:11.446758284 +0200
+@@ -118,7 +118,7 @@ all: compile_commands.json $(WHAT)
  
  profiling: $(OBJDIR)/libgmon.a $(OBJDIR)/pstart.o
  
--DEFAULTCFLAGS=-pipe -nostdinc -D_REENTRANT $(EXTRACFLAGS)
-+DEFAULTCFLAGS=-pipe -nostdinc -D_REENTRANT $(EXTRACFLAGS) $(OPTFLAGS)
+-DEFAULTCFLAGS=-pipe -nostdinc -D_REENTRANT -ffreestanding $(EXTRACFLAGS)
++DEFAULTCFLAGS=-pipe -nostdinc -D_REENTRANT -ffreestanding $(EXTRACFLAGS) $(OPTFLAGS)
  CFLAGS=$(DEFAULTCFLAGS)
  CROSS=
  
-@@ -152,14 +152,6 @@ include $(ARCH)/Makefile.add
+@@ -154,14 +154,6 @@ include $(ARCH)/Makefile.add
  
  LIBMATHOBJ=$(patsubst %,$(OBJDIR)/%,$(LIBMATH))
  
@@ -23,8 +22,8 @@ diff -urNp -x '*.orig' dietlibc-0.34.org/Makefile dietlibc-0.34/Makefile
 -STRIP = :
 -endif
  CFLAGS += -W -Wall -Wextra -Wchar-subscripts -Wmissing-prototypes -Wmissing-declarations -Wno-switch -Wno-unused -Wredundant-decls -Wshadow
+ #CFLAGS += -Wsuggest-attribute=malloc
  
- ASM_CFLAGS = -Wa,--noexecstack
 diff -urNp -x '*.orig' dietlibc-0.34.org/findcflags.sh dietlibc-0.34/findcflags.sh
 --- dietlibc-0.34.org/findcflags.sh	2014-04-19 17:07:32.000000000 +0200
 +++ dietlibc-0.34/findcflags.sh	2024-12-03 00:46:28.132368197 +0100

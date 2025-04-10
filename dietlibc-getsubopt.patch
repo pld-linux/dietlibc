@@ -1,6 +1,6 @@
---- dietlibc-0.31/include/stdlib.h~	2009-03-19 14:33:16.000000000 +0100
-+++ dietlibc-0.31/include/stdlib.h	2009-03-19 14:46:17.000000000 +0100
-@@ -81,6 +81,16 @@
+--- dietlibc-0.35/include/stdlib.h.orig	2025-04-10 20:03:24.259669957 +0200
++++ dietlibc-0.35/include/stdlib.h	2025-04-10 20:05:28.765662117 +0200
+@@ -150,6 +150,16 @@ __attribute__((__warn_unused_result__))
  long int labs(long int i) __THROW __attribute__((__const__));
  __extension__ long long int llabs(long long int i) __THROW __attribute__((__const__));
  
@@ -15,8 +15,8 @@
 +#endif
 +
  #ifdef _XOPEN_SOURCE
+ __attribute__((__warn_unused_result__))
  int grantpt (int fd) __THROW;
- int unlockpt (int fd) __THROW;
 --- /dev/null	2009-03-05 20:33:59.000000000 +0100
 +++ dietlibc-0.31/lib/getsubopt.c	2009-03-19 14:55:18.000000000 +0100
 @@ -0,0 +1,73 @@
